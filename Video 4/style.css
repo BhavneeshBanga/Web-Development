@@ -1,0 +1,91 @@
+/* =========================
+   Global Reset & Base Setup
+   ========================= */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* =========================
+   Body Styling
+   ========================= */
+body {
+    min-height: 100vh;
+    padding: 40px 20px;
+    background: linear-gradient(135deg, #1f1c2c, #928dab);
+    color: #ffffff;
+}
+
+/* =========================
+   Headings
+   ========================= */
+h1 {
+    text-align: center;
+    font-size: 2.8rem;
+    margin-bottom: 15px;
+    letter-spacing: 1px;
+}
+
+h2 {
+    margin: 45px 0 20px;
+    font-size: 1.8rem;
+    padding-left: 12px;
+    border-left: 6px solid #ffcc70;
+}
+
+/* =========================
+   Bookmark Items
+   ========================= */
+p {
+    display: flex;
+    justify-content: center;
+    margin: 15px 0;
+}
+
+/* =========================
+   Links (Bookmark Cards)
+   ========================= */
+a {
+    width: 100%;
+    max-width: 360px;
+    text-decoration: none;
+    padding: 15px 22px;
+    border-radius: 14px;
+    background: rgba(20, 215, 117, 0.18);
+    color: #0a92f4;
+    font-size: 1.1rem;
+    font-weight: 500;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.25);
+    transition: all 0.35s ease;
+}
+
+/* =========================
+   Hover Effects
+   ========================= */
+a:hover {
+    transform: translateY(-5px) scale(1.04);
+    background: rgba(156, 10, 214, 0.28);
+    color: #bf07e8;
+    box-shadow: 0 14px 35px rgba(232, 12, 232, 0.4);
+}
+
+/* =========================
+   Responsive Design
+   ========================= */
+@media (max-width: 600px) {
+    h1 {
+        font-size: 2.2rem;
+    }
+
+    h2 {
+        font-size: 1.5rem;
+    }
+
+    a {
+        font-size: 1rem;
+        padding: 14px 18px;
+    }
+}
