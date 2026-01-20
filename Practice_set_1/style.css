@@ -1,0 +1,12 @@
+td{
+    border: 2px solid black;
+}
+.video-container{
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+}
+
+video{
+   border-radius: 0.2cm;
+}
