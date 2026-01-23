@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sizing Units</title>
+    <style>
+
+        html{
+            font-size: 12px;
+        }
+
+        .box{
+            border: 2px solid black;
+            /* width: 1920px;
+             */
+            width: 50vw;
+            margin: auto;
+
+            background-color: aquamarine;
+        }
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            box-sizing: border-box;
+             border: 2px solid black;
+            /* width: 1920px;
+             */
+            width: 80vw;
+            margin: 40px auto;
+            /* height: 80vh; */
+            min-height: 80vh;
+            background-color: aquamarine;
+            font-family: sans-serif;
+            font-style: italic;
+            font-size: 19px;
+            color: maroon;
+        }
+        .container p{
+            font-size: 2rem;
+        }
+        .mycont{
+            box-sizing: border-box;
+            border: 2px solid black;
+             margin: 40px auto;
+            color: black;
+            
+            font-size: 22px;
+            width: 80%;
+            /* width: 100vmin; */
+        }
+        div > div > p{
+            border: 3px solid black;
+            width: 50%;
+            height: 50%;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="box">
+        This is a box
+    </div>
+    <div class="container">
+        <div>
+            <p>
+               heu amazing man 
+            </p>
+        </div>
+        <p>
+            expand this to see the experiment lorem123
+        </p>
+        <p>
+            quasi iusto culpa quos cumque ipsa nam iste dolores, ea facilis tempora voluptatum nisi delectus, ab beatae fuga nihil. Laudantium est eius quae non quibusdam officia quisquam, beatae voluptatum distinctio voluptatibus, voluptate nesciunt facere incidunt perferendis velit, eveniet debitis atque odit vel ratione et ipsam. Necessitatibus veniam, minima ratione perspiciatis culpa cum similique facilis sapiente officia harum, fugiat mollitia! Reiciendis alias temporibus eum suscipit voluptatem perspiciatis consequuntur magni alias culpa sint praesentium quos ipsa obcaecati deserunt necessitatibus corrupti modi excepturi, sed quis cupiditate voluptates ullam? Consequuntur sapiente quis minima dicta optio rem commodi laboriosam natus, accusantium quibusdam, iste suscipit. Laudantium nesciunt quasi officia aliquid incidunt delectus.
+        </p>
+    </div>
+    <div class="mycont">
+        this is another container
+    </div>
+    
+</body>
+</html>
