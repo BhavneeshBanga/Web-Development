@@ -4,36 +4,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CSS position </title>
+    <title>CARD</title>
     <style>
-        body {
-            margin: 0;
+        .card {
+            box-sizing: border-box;
+            border: 2px solid black;
+            border-radius: 8px;
+            /* width: 1920px;
+             */
+            width: 80vw;
+            margin: 40px auto;
+            /* height: 80vh; */
+            min-height: 80vh;
+            background-color: rgb(194, 218, 210);
+            font-family: sans-serif;
+            font-style: italic;
+            font-size: 19px;
+            color: maroon;
         }
 
-        .container {
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+        .image {
+            border-radius: 8px;
+            width: 80%;
+            height: 100%;
+            position: fixed;
+            margin: 28px;
+            padding: auto;
         }
-
-        .box {
-            background-image: url("https://tse3.mm.bing.net/th/id/OIP.-b4eV7Lj5pzuF6Z1FOn1ggHaE8?cb=defcachec2&rs=1&pid=ImgDetMain&o=7&rm=3");
-            background-size: cover;   
-            width: 350px;
-            height: 450px;
-            background-color: rgb(224, 224, 224);
+        .p{
+            background-color: grey;
         }
     </style>
 </head>
 
 <body>
-    <div class="container">
-        <div class="box">
-            <!-- <img class="image" src="https://tse3.mm.bing.net/th/id/OIP.-b4eV7Lj5pzuF6Z1FOn1ggHaE8?cb=defcachec2&rs=1&pid=ImgDetMain&o=7&rm=3" alt=""> -->
-            
-
+    <div class="card">
+        <img class="image"
+            src="https://tse1.mm.bing.net/th/id/OIP._SvPOTOk_JxRIHhGJFpKdwHaE8?cb=defcachec2&rs=1&pid=ImgDetMain&o=7&rm=3"
+            alt="">
+        <div class="card-content">
+            <p class="about">About</p>
         </div>
+
     </div>
 
 
