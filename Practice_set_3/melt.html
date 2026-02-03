@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Pro Text Morph Effect</title>
+</head>
+
+<body style="
+  margin:0;
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background: radial-gradient(circle at top, #1a1a1a, #000);
+  font-family: 'Segoe UI', sans-serif;
+">
+
+  <!-- GLASS CONTAINER -->
+  <div style="
+    position: relative;
+    width: 420px;
+    height: 140px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(20px);
+    background: rgba(255,255,255,0.06);
+    border-radius: 24px;
+    box-shadow: 0 0 60px rgba(0,0,0,0.6);
+  ">
+
+    <!-- TEXT 1 -->
+    <span style="
+      position:absolute;
+      font-size:64px;
+      font-weight:800;
+      letter-spacing:2px;
+      background: linear-gradient(90deg, #00f5ff, #8b5cf6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: morphOne 5s infinite;
+    ">
+      CREATE
+    </span>
+
+    <!-- TEXT 2 -->
+    <span style="
+      position:absolute;
+      font-size:64px;
+      font-weight:800;
+      letter-spacing:2px;
+      background: linear-gradient(90deg, #22c55e, #a3e635);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: morphTwo 5s infinite;
+    ">
+      INSPIRE
+    </span>
+
+    <!-- TEXT 3 -->
+    <span style="
+      position:absolute;
+      font-size:64px;
+      font-weight:800;
+      letter-spacing:2px;
+      background: linear-gradient(90deg, #f97316, #facc15);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: morphThree 5s infinite;
+    ">
+      EVOLVE
+    </span>
+
+  </div>
+
+  <!-- KEYFRAMES INLINE -->
+  <style>
+    @keyframes morphOne {
+      0%, 25% {
+        opacity: 1;
+        filter: blur(0px);
+      }
+      33%, 100% {
+        opacity: 0;
+        filter: blur(14px);
+      }
+    }
+
+    @keyframes morphTwo {
+      0%, 33% {
+        opacity: 0;
+        filter: blur(14px);
+      }
+      40%, 65% {
+        opacity: 1;
+        filter: blur(0px);
+      }
+      73%, 100% {
+        opacity: 0;
+        filter: blur(14px);
+      }
+    }
+
+    @keyframes morphThree {
+      0%, 65% {
+        opacity: 0;
+        filter: blur(14px);
+      }
+      73%, 100% {
+        opacity: 1;
+        filter: blur(0px);
+      }
+    }
+  </style>
+
+</body>
+</html>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Liquid Text Merge</title>
+</head>
+
+<body style="
+  margin:0;
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background:#0b0b0b;
+  font-family: 'Segoe UI', sans-serif;
+">
+
+<!-- SVG FILTER (GOOEY MAGIC) -->
+<svg width="0" height="0">
+  <filter id="gooey">
+    <feGaussianBlur in="SourceGraphic" stdDeviation="12" result="blur"/>
+    <feColorMatrix in="blur" mode="matrix"
+      values="
+        1 0 0 0 0
+        0 1 0 0 0
+        0 0 1 0 0
+        0 0 0 22 -10
+      " result="goo"/>
+    <feComposite in="SourceGraphic" in2="goo" operator="atop"/>
+  </filter>
+</svg>
+
+<!-- CONTAINER -->
+<div style="
+  position: relative;
+  width: 520px;
+  height: 120px;
+  filter: url(#gooey);
+">
+
+  <!-- TEXT 1 -->
+  <div style="
+    position:absolute;
+    width:100%;
+    text-align:center;
+    font-size:72px;
+    font-weight:900;
+    color:#38bdf8;
+    animation: melt1 5s infinite;
+  ">
+    CREATE
+  </div>
+
+  <!-- TEXT 2 -->
+  <div style="
+    position:absolute;
+    width:100%;
+    text-align:center;
+    font-size:72px;
+    font-weight:900;
+    color:#a78bfa;
+    animation: melt2 5s infinite;
+  ">
+    INSPIRE
+  </div>
+
+</div>
+
+<style>
+@keyframes melt1 {
+  0%, 40% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  60%, 100% {
+    opacity: 0;
+    transform: translateX(-40px);
+  }
+}
+
+@keyframes melt2 {
+  0%, 40% {
+    opacity: 0;
+    transform: translateX(40px);
+  }
+  60%, 100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+</style>
+
+</body>
+</html>
