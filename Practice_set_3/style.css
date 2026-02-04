@@ -1,0 +1,67 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+  min-height: 100vh;
+  background: #090b14;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card {
+  position: relative;
+  width: 340px;
+  height: 210px;
+  padding: 30px;
+  border-radius: 20px;
+  background: #0f1426;
+  color: #fff;
+  overflow: hidden;
+}
+
+/* 🔥 Enhanced Border Glow */
+.card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 2.5px;
+
+  background:
+    radial-gradient(
+      180px circle at var(--x) var(--y),
+      rgba(255, 90, 180, 1),
+      rgba(255, 90, 180, 0.6) 30%,
+      rgba(255, 90, 180, 0.2) 55%,
+      transparent 70%
+    );
+
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.card:hover::before {
+  opacity: 1;
+}
+
+/* Content */
+.card h2,
+.card p {
+  position: relative;
+  z-index: 1;
+}
+
+.card h2 {
+  margin-bottom: 10px;
+}
