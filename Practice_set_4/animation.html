@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Motion Path</title>
+    <style>
+        body {
+            background: #222;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .circle {
+            width: 40px;
+            height: 40px;
+            background: gold;
+            border-radius: 50%;
+            position: relative;
+            animation: movePath 5s linear infinite;
+            offset-path: path("M 0 0 C 100 0, 100 100, 200 100 S 300 200, 400 100");
+            offset-rotate: auto;
+        }
+
+        @keyframes movePath {
+            0% {
+                offset-distance: 0%;
+            }
+
+            100% {
+                offset-distance: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="circle"></div>
+</body>
+
+</html>

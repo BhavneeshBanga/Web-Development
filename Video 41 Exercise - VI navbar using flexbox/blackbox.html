@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Navbar with Flexbox</title>
+    <style>
+        /* Basic reset and responsive styles (since inline CSS can't handle media queries) */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #0f0f23, #1a1a2e);
+            color: #fff;
+            line-height: 1.6;
+        }
+        section {
+            padding: 100px 20px;
+            text-align: center;
+            min-height: 100vh;
+        }
+        /* Mobile responsiveness for navbar */
+        @media screen and (max-width: 768px) {
+            .navbar-menu {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                background: linear-gradient(90deg, #1a1a2e, #16213e);
+                padding: 20px 0;
+            }
+            .navbar-menu.active {
+                display: flex;
+            }
+            .navbar-menu li {
+                margin: 10px 0;
+            }
+            #mobile-menu {
+                display: flex !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav style="background: linear-gradient(90deg, #1a1a2e, #16213e); color: #fff; padding: 0 20px; position: fixed; top: 0; width: 100%; z-index: 1000; box-shadow: 0 4px 10px rgba(0,0,0,0.3); border-radius: 0 0 10px 10px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; height: 70px;">
+            <div style="font-size: 1.8rem; font-weight: bold;">
+                <a href="#home" style="color: #00d4ff; text-decoration: none; transition: color 0.3s ease; text-shadow: 0 0 10px #00d4ff;">🚀 Your Logo</a>
+            </div>
+            <ul class="navbar-menu" style="display: flex; list-style: none; margin: 0;">
+                <li style="margin-left: 40px;">
+                    <a href="#home" style="color: #fff; text-decoration: none; font-size: 1.1rem; transition: color 0.3s ease, transform 0.3s ease;">Home</a>
+                </li>
+                <li style="margin-left: 40px;">
+                    <a href="#about" style="color: #fff; text-decoration: none; font-size: 1.1rem; transition: color 0.3s ease, transform 0.3s ease;">About</a>
+                </li>
+                <li style="margin-left: 40px;">
+                    <a href="#services" style="color: #fff; text-decoration: none; font-size: 1.1rem; transition: color 0.3s ease, transform 0.3s ease;">Services</a>
+                </li>
+                <li style="margin-left: 40px;">
+                    <a href="#contact" style="color: #fff; text-decoration: none; font-size: 1.1rem; transition: color 0.3s ease, transform 0.3s ease;">Contact</a>
+                </li>
+            </ul>
+            <div style="display: none; flex-direction: column; cursor: pointer;" id="mobile-menu">
+                <span style="width: 25px; height: 3px; background-color: #00d4ff; margin: 3px 0; transition: 0.3s;"></span>
+                <span style="width: 25px; height: 3px; background-color: #00d4ff; margin: 3px 0; transition: 0.3s;"></span>
+                <span style="width: 25px; height: 3px; background-color: #00d4ff; margin: 3px 0; transition: 0.3s;"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Sample page content -->
+    <section id="home" style="background: linear-gradient(135deg, #0f0f23, #1a1a2e);">
+        <h1 style="font-size: 3rem; margin-bottom: 20px; text-shadow: 0 0 20px #00d4ff;">Welcome to Home</h1>
+        <p style="font-size: 1.2rem; max-width: 600px; margin: 0 auto;">This is a sample home section. The navbar above is fixed and uses Flexbox for layout. Scroll down to see more sections.</p>
+    </section>
+
+    <section id="about" style="background: linear-gradient(135deg, #16213e, #0f0f23);">
+        <h1 style="font-size: 3rem; margin-bottom: 20px; text-shadow: 0 0 20px #00d4ff;">About Us</h1>
+        <p style="font-size: 1.2rem; max-width: 600px; margin: 0 auto;">Learn more about our services. This page demonstrates a modern, attractive navbar with inline CSS and Flexbox.</p>
+    </section>
+
+    <section id="services" style="background: linear-gradient(135deg, #1a1a2e, #16213e);">
+        <h1 style="font-size: 3rem; margin-bottom: 20px; text-shadow: 0 0 20px #00d4ff;">Our Services</h1>
+        <p style="font-size: 1.2rem; max-width: 600px; margin: 0 auto;">We offer top-notch services. The navbar links smoothly to these sections.</p>
+    </section>
+
+    <section id="contact" style="background: linear-gradient(135deg, #0f0f23, #1a1a2e);">
+        <h1 style="font-size: 3rem; margin-bottom: 20px; text-shadow: 0 0 20px #00d4ff;">Contact Us</h1>
+        <p style="font-size: 1.2rem; max-width: 600px; margin: 0 auto;">Get in touch. This is the end of the sample page.</p>
+    </section>
+
+    <script>
+        // JavaScript for mobile menu toggle
+        const mobileMenu = document.getElementById('mobile-menu');
+        const navbarMenu = document.querySelector('.navbar-menu');
+
+        mobileMenu.addEventListener('click', () => {
+            navbarMenu.classList.toggle('active');
+        });
+    </script>
+</body>
+</html>
