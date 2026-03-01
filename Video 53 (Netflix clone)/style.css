@@ -1,4 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Quicksand:wght@300..700&display=swap');
 
 * {
     margin: 0;
@@ -94,7 +96,16 @@ nav button {
     z-index: 20;
 }
 
+.faqbox{
+    font-family: "Open Sans", sans-serif;
+}
 
+.first span{
+    font-family: "Open Sans", sans-serif;
+}
+h2{
+    font-family: "Open Sans", sans-serif;
+}
 
 
 /* real wala        */
@@ -271,6 +282,7 @@ section.first>div :nth-child(2) {
 }
 
 footer {
+    font-family: "Open Sans", sans-serif;
     color: white;
     max-width: 60vw;
     margin: auto;
