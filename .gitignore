@@ -6,3 +6,9 @@
 *.svg
 my-react-app/
 src/
+
+
+git add .
+git commit -m "Added code"
+git push
+
