@@ -1,0 +1,29 @@
+h1{
+    background-color: orange;
+    height: 400px;
+    width: 400px;
+    /* box-sizing: content-box; */
+    /* border-color: black;
+    border-width: 10px;
+    border-style: solid; */
+
+    /* border: 10px solid green; */
+    border-top: 12px solid brown;
+    padding : 15px;
+    margin: 30px;   
+    /* do border k beech ka content*/
+    /* content aur border k beech ka distance */
+}
+
+
+h2{
+    background-color: pink;
+    border: 3px solid blueviolet;
+}
+
+p{
+    background-color: aquamarine;
+    border: 3px solid blueviolet;
+    padding : 5px;
+    margin: 2px;
+}

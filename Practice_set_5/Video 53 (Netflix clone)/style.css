@@ -1,0 +1,385 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Quicksand:wght@300..700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: black;
+}
+
+
+
+.main {
+    background-image: url("assets/img/bg.jpg");
+    background-position: center center;
+    background-size: max(1000px, 100vw);
+    background-repeat: no-repeat;
+    height: 80vh;
+    position: relative
+}
+
+.main .box {
+    height: 80vh;
+    width: 100%;
+    opacity: 0.70;
+    position: absolute;
+    top: 0;
+    background-color: black;
+}
+
+
+nav {
+    max-width: 60vw;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 62px;
+}
+
+nav img {
+    color: rgb(19, 67, 114);
+    width: 123px;
+    position:absolute;
+    z-index: 10;
+    /* z index lagane se yeh wlal sabse upar aa jayega*/
+}
+
+nav button {
+    position:relative;
+    z-index: 10;
+
+}
+
+.hero {
+    height: calc(100% - 62px);
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    color: white;
+    position: relative;
+    font-family: "Roboto", sans-serif;
+    font-optical-sizing: auto;
+    gap: 23px;
+    padding: 0 30px;
+}
+
+.hero> :first-child {
+    /* yeh jo hero ke baad mai greater than ka sign daala hai uska matlaba hai immmediate child 
+    kyuki duikkat yeh aarhai thi ki hamara neeche wale placeholder email address and gettingg stareted button bhi simai bade ho gye the*/
+    font-size: 56px;
+    font-weight: 900;
+    text-align: center;
+}
+
+.hero> :nth-child(2) {
+    font-size: 20px;
+    font-weight: 500;
+    text-align: center;
+}
+
+.hero> :nth-child(3) {
+    font-size: 16px;
+    font-weight: 400;
+    text-align: center;
+}
+
+.seperator {
+    height: 5px;
+    background-color: rgb(50, 49, 49);
+    position: relative;
+    z-index: 20;
+}
+
+.faqbox{
+    font-family: "Open Sans", sans-serif;
+}
+
+.first span{
+    font-family: "Open Sans", sans-serif;
+}
+h2{
+    font-family: "Open Sans", sans-serif;
+}
+
+
+/* real wala        */
+
+/* .seperator{              
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: -1;
+    margin-top: -.25rem;
+    border-radius: inherit;
+    background: linear-gradient(to right, rgba(33, 13, 22, 1) 16%, rgba(184, 40, 105, 1), rgba(229, 9, 20, 1), rgba(184, 40, 105, 1), rgba(33, 13, 22, 1) 84%);
+} */
+
+.btn {
+    padding: 3px 8px;
+    font-weight: 400;
+    color: white;
+    background-color: rgba(178, 175, 175, 0.155);
+    border: 0.5px solid white;
+    border-radius: 3px;
+    cursor: pointer;
+
+}
+
+.btn-red {
+    font-weight: 500;
+    z-index: 1;
+    border-radius: 3px;
+    font-size: 20px;
+    padding: 12px 35px;
+    cursor: pointer;
+    background-color: red;
+    color: white;
+}
+
+.btn-red-sn {
+    background-color: red;
+    color: white;
+
+}
+
+
+.hero-buttons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+}
+
+
+.main input {
+    font-size: 14px;
+    padding: 14px 15px 12px 14px;
+    /* background-color: red; */
+    color: white;
+    background-color: rgba(23, 23, 23, 0.2)
+}
+
+
+
+.first {
+    display: flex;
+    justify-content: center;
+    max-width: 70vw;
+    margin: auto;
+    color: white;
+    align-items: center;
+}
+
+@media screen and (max-width: 998px) {
+    .first {
+        padding: 44px 0px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+}
+
+.secimg {
+    /* width: 30vw; */
+    width: 401px;
+    position: relative;
+}
+
+
+.secimg img {
+    /* yeh units theek nahi baith rahi thi is liye hamne direct px units use kari hain */
+    /* width: 30vw;       */
+    width: 401px;
+
+    position: relative;
+    z-index: 10;
+    /* display: block; */
+
+}
+
+.secimg video {
+    right: 0;
+    top: 51px;
+    left: 33px;
+    width: 365px;
+    /* object-fit: cover; */
+    /* z-index: 19; */
+    position: absolute;
+}
+
+@media screen and (max-width: 998px) {
+    .secimg video {
+        width: 268px;
+    }
+
+    .secimg img {
+        width: 270px;
+    }
+
+    .secimg {
+        width: 270px;
+        position: relative;
+        overflow: auto;
+    }
+
+}
+
+
+section.first>div {
+    display: flex;
+    flex-direction: column;
+    padding: 34px 0;
+}
+
+section.first>div :nth-child(1) {
+    font-size: 48px;
+    font-weight: bolder;
+}
+
+section.first>div :nth-child(2) {
+    font-size: 24px;
+}
+
+.faq {
+    background-color: black;
+    color: white;
+    padding: 34px;
+    font-size: 24px;
+}
+
+.faq h2 {
+    text-align: center;
+    font-size: 48px;
+}
+
+.faqbox:hover {
+    background-color: #414141
+}
+
+/* aisa ham tab karte jab hamare svg ka color black hota aur hame usko white show karna hota  */
+/* .faqbox svg{                 
+    filter: invert(1);
+} */
+
+.faqbox {
+    transition: all 0.25s ease-out;
+    justify-content: space-between;
+    display: flex;
+    background-color: #2d2d2d;
+    padding: 24px;
+    max-width: 60vw;
+    margin: 34px auto;
+    cursor: pointer;
+}
+
+footer {
+    font-family: "Open Sans", sans-serif;
+    color: white;
+    max-width: 60vw;
+    margin: auto;
+    max-width: 60vw;
+    margin: auto;
+}
+
+footer .questions {
+    padding: 34px 0;
+}
+
+
+.footer {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    color: white;
+}
+
+@media screen and (max-width: 1300px) {
+    .first {
+        flex-wrap: wrap;
+    }
+
+    nav {
+        max-width: 90vw;
+    }
+
+    .secimg img {
+        top: 10%;
+        width: 270px;
+    }
+
+    .secimg video {
+        top: 18%;
+        width: 76%;
+        width: -webkit-fill-available;
+    }
+
+    .hero> :nth-child(1) {
+        font-size: 32px;
+    }
+
+    .hero> :nth-child(2) {
+        font-size: 18px;
+    }
+
+    .hero> :nth-child(3) {
+        font-size: 18px;
+    }
+
+    .hero-buttons {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 16px;
+    }
+
+    .faq h2 {
+        text-align: center;
+        font-size: 32px;
+    }
+    footer{
+        max-width: 90vw;
+    }
+    .footer-item{
+        align-items: center;
+    }
+}
+
+@media (min-width: 998px) and (max-width: 1300px) {
+    .secimg img {
+        width: 416px;
+    }
+
+    .secimg video {
+        width: -webkit-fill-available;
+    }
+}
+
+
+@media screen and (max-width: 998px) {
+    .footer {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 25px;
+    }
+
+}
+
+.footer a {
+    font-size: 14px;
+    color: white;
+}
+
+.footer-item {
+    display: flex;
+    flex-direction: column;
+    gap: 23px;
+}
