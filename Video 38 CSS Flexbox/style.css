@@ -1,5 +1,40 @@
 .box{
     height: 100px;
     width: 100px;
+    margin: 5px;
 }
 
+
+.container{
+    background-color: rgb(241, 232, 220);
+    display: flex;
+    height: 450px;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    /* justify-content: space-around;
+     */
+    /* flex-direction: row-reverse; */
+    /* justify-content: space-between; */
+    justify-content: space-evenly;
+}
+
+
+.first{
+    background-color: orange;
+}
+
+
+.second{
+    background-color: green;
+}
+
+
+.third{
+    background-color: red;
+}
+
+
+.forth{
+    background-color: white;
+}
