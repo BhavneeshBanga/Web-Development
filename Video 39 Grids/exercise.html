@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+
+        *{
+            margin: 0;
+            padding: 0;
+            color: white
+            ;
+        }
+        .container{
+
+            height: 800px;
+            width: 800px;
+            display: grid;
+
+            
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            grid-template-rows: 1fr 1fr 1fr;
+
+            background-color: black;
+            width: 400px;
+            height: 400px;
+
+            gap: 9px;
+            padding: 20px;
+
+        }
+
+        body{
+            background-color: black;
+            font-size: 30px;
+        }
+
+        .box{
+            background-color: rgb(127, 127, 212);
+        }
+
+        .first{
+            grid-row-start: 1;
+            grid-row-end: 4;
+        }
+        
+        
+        .second{
+            grid-column-start: 2;
+            grid-column-end: 4;
+        }
+        
+       .sixth{
+        grid-row: 2/4;
+        grid-column: 4/5;
+       }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <dif class="box first">First</dif>
+        <dif class="box second">second</dif>
+        <dif class="box third">third</dif>
+        <dif class="box forth">forth</dif>
+        <dif class="box fifth">fifth</dif>
+        <dif class="box sixth">sixth</dif>
+        <dif class="box seven">seven</dif>
+        <dif class="box eight">eight</dif>
+    </div>
+</body>
+</html>
