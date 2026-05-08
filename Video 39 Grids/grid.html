@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2D Lyout using flexbox</title>
+    <style>
+        * {
+            color: white;
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+            font-size: 30px;
+        }
+
+        body {
+            background-color: black;
+        }
+
+        .container {
+            padding: 10px;
+            display: grid;
+            grid-template-rows: 1fr 1fr;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            background-color: pink;
+            width: 400px;
+            height: 400px;
+        }
+
+        .first{
+            background-color: orange;
+        }
+        .second{
+            background-color: blue;
+        }
+        .third{
+            background-color: yellow;
+        }
+        .forth{
+            background-color: green;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="container">
+        <div class="box first">
+            First
+        </div>
+        <div class="box second">
+            Second
+        </div>
+        <div class="box third">
+            third
+        </div>
+        <div class="box forth">
+            forth
+        </div>
+    </div>
+</body>
+
+</html>
