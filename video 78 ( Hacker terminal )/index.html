@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <style>
+        body {
+            background-color: green;
+            color: white;
+            font-family: monospace;
+            @import url('https://fonts.googleapis.com/css2?family=Lobster+Two:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+        }
+    </style>
+</head>
+
+<body>
+    <script>
+
+        const arr = [
+            "Initializing Hacking",
+            "Reading your files",
+            "Password File Detected",
+            "Sending passwords to server",
+            "Cleaning up"
+        ];
+
+        function wait(ms) {
+            return new Promise((resolve) => {
+                setTimeout(resolve, ms);
+            });
+        }
+
+        async function animateDots(h1, text, duration) {
+
+            const start = Date.now();
+            console.log(start);
+
+
+            while (Date.now() - start < duration) {
+                for (let i = 1; i <= 5; i++) {
+                    h1.textContent = text + ".".repeat(i);
+                    await wait(100);
+                    if (Date.now() - start > duration) {
+                        break;
+                    }
+                }
+            }
+        }
+
+        async function showMessages() {
+            for (const item of arr) {
+                const h1 = document.createElement("h1");
+                document.body.appendChild(h1);
+                const randomTime =
+                    Math.floor(Math.random() * 5000) + 1000;
+
+                await animateDots(h1, item, randomTime);
+            }
+        }
+
+        showMessages();
+
+    </script>
+
+</body>
+
+</html>
