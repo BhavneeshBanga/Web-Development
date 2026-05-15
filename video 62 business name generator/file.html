@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CycleGAN Config Guide</title>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #05070f;
+      --surface: #0c0f1e;
+      --card: #111427;
+      --border: rgba(255,255,255,0.07);
+      --accent-blue: #4f8ef7;
+      --accent-green: #3dd68c;
+      --accent-orange: #ff9a3c;
+      --accent-red: #ff5c5c;
+      --accent-purple: #b17aff;
+      --accent-yellow: #ffd166;
+      --text: #e8eaf6;
+      --muted: rgba(232,234,246,0.5);
+      --code-bg: rgba(79,142,247,0.08);
+    }
+
+    body {
+      font-family: 'Outfit', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 0;
+      background-image:
+        radial-gradient(ellipse 80% 40% at 50% -10%, rgba(79,142,247,0.12) 0%, transparent 60%);
+    }
+
+    /* ── HERO ── */
+    .hero {
+      text-align: center;
+      padding: 4rem 2rem 3rem;
+      border-bottom: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        90deg,
+        rgba(79,142,247,0.03) 0px,
+        rgba(79,142,247,0.03) 1px,
+        transparent 1px,
+        transparent 60px
+      ),
+      repeating-linear-gradient(
+        0deg,
+        rgba(79,142,247,0.03) 0px,
+        rgba(79,142,247,0.03) 1px,
+        transparent 1px,
+        transparent 60px
+      );
+      pointer-events: none;
+    }
+    .hero-badge {
+      display: inline-block;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      background: rgba(79,142,247,0.15);
+      color: var(--accent-blue);
+      border: 1px solid rgba(79,142,247,0.3);
+      border-radius: 4px;
+      padding: 4px 12px;
+      letter-spacing: 0.1em;
+      margin-bottom: 1.2rem;
+    }
+    .hero h1 {
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 0.8rem;
+    }
+    .hero h1 span { color: var(--accent-blue); }
+    .hero p {
+      color: var(--muted);
+      font-size: 1rem;
+      font-weight: 300;
+      max-width: 560px;
+      margin: 0 auto;
+    }
+
+    /* ── LEGEND ── */
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: center;
+      padding: 1.5rem 2rem;
+      border-bottom: 1px solid var(--border);
+      background: var(--surface);
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+    .legend-dot {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    /* ── LAYOUT ── */
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 2.5rem 1.5rem;
+    }
+
+    .section-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 1.2rem;
+      padding-left: 4px;
+    }
+
+    /* ── TABLE ── */
+    .var-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 3rem;
+      background: var(--card);
+      border-radius: 14px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+
+    .var-table thead tr {
+      background: rgba(255,255,255,0.03);
+      border-bottom: 1px solid var(--border);
+    }
+    .var-table thead th {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      padding: 12px 16px;
+      text-align: left;
+      font-weight: 600;
+    }
+
+    .var-table tbody tr {
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      transition: background 0.15s;
+    }
+    .var-table tbody tr:last-child { border-bottom: none; }
+    .var-table tbody tr:hover { background: rgba(255,255,255,0.02); }
+
+    .var-table td {
+      padding: 14px 16px;
+      font-size: 14px;
+      vertical-align: top;
+      line-height: 1.5;
+    }
+
+    .var-name {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--accent-blue);
+      white-space: nowrap;
+    }
+
+    .var-default {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      background: var(--code-bg);
+      color: var(--accent-yellow);
+      border-radius: 4px;
+      padding: 2px 8px;
+      white-space: nowrap;
+      display: inline-block;
+    }
+
+    .desc { color: var(--text); }
+    .desc .hi { font-weight: 600; }
+
+    /* Effect pills */
+    .effects { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 20px;
+    }
+    .pill-quality { background: rgba(61,214,140,0.12); color: var(--accent-green); }
+    .pill-speed   { background: rgba(255,154,60,0.12);  color: var(--accent-orange);}
+    .pill-vram    { background: rgba(255,92,92,0.12);   color: var(--accent-red);  }
+    .pill-stable  { background: rgba(177,122,255,0.12); color: var(--accent-purple);}
+    .pill-neutral { background: rgba(255,255,255,0.06); color: var(--muted);       }
+
+    .arrow { font-size: 10px; }
+
+    /* impact bar */
+    .impact-wrap { display: flex; align-items: center; gap: 8px; }
+    .impact-bar-bg {
+      flex: 1;
+      height: 4px;
+      background: rgba(255,255,255,0.08);
+      border-radius: 2px;
+      min-width: 60px;
+    }
+    .impact-bar {
+      height: 100%;
+      border-radius: 2px;
+      transition: width 0.3s;
+    }
+    .impact-label {
+      font-size: 11px;
+      color: var(--muted);
+      white-space: nowrap;
+      min-width: 28px;
+      text-align: right;
+    }
+
+    /* ── SUMMARY CARDS ── */
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 14px;
+      margin-bottom: 3rem;
+    }
+    .sum-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.4rem 1.5rem;
+    }
+    .sum-card-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 1rem;
+    }
+    .sum-icon {
+      width: 36px; height: 36px;
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px;
+    }
+    .sum-card h3 {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text);
+    }
+    .sum-card ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .sum-card li {
+      font-size: 12.5px;
+      color: var(--muted);
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      line-height: 1.4;
+    }
+    .sum-card li::before {
+      content: '→';
+      flex-shrink: 0;
+      font-size: 11px;
+      margin-top: 1px;
+    }
+    .sum-card li strong { color: var(--text); font-weight: 600; }
+
+    /* ── QUICK PRESETS ── */
+    .presets-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+      margin-bottom: 3rem;
+    }
+    .preset-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.4rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .preset-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+    }
+    .preset-fast::before  { background: var(--accent-orange); }
+    .preset-bal::before   { background: var(--accent-blue); }
+    .preset-best::before  { background: var(--accent-green); }
+    .preset-lite::before  { background: var(--accent-purple); }
+
+    .preset-card h3 {
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .preset-card .tag {
+      font-size: 11px;
+      color: var(--muted);
+      margin-bottom: 1rem;
+    }
+    .preset-card pre {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      line-height: 1.7;
+      color: rgba(232,234,246,0.75);
+      background: rgba(255,255,255,0.03);
+      border-radius: 8px;
+      padding: 10px 12px;
+      white-space: pre-wrap;
+    }
+    .preset-card pre .key { color: var(--accent-blue); }
+    .preset-card pre .val { color: var(--accent-yellow); }
+
+    /* divider */
+    .divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 0 0 2.5rem;
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem;
+      font-size: 11px;
+      color: rgba(255,255,255,0.2);
+      border-top: 1px solid var(--border);
+      font-family: 'JetBrains Mono', monospace;
+      letter-spacing: 0.05em;
+    }
+  </style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-badge">class Config — CycleGAN</div>
+  <h1>Variables ka <span>Complete Guide</span></h1>
+  <p>Har variable ka kya kaam hai, badhaane se kya hoga, ghatane se kya — sab kuch ek jagah</p>
+</div>
+
+<!-- LEGEND -->
+<div class="legend">
+  <div class="legend-item"><div class="legend-dot" style="background:var(--accent-green)"></div> Image Quality badhti hai</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--accent-orange)"></div> Training time badhta/ghatata hai</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--accent-red)"></div> GPU VRAM usage</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--accent-purple)"></div> Training stability</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--muted)"></div> Neutral / path only</div>
+</div>
+
+<div class="container">
+
+  <!-- ════════════════════════════════════════ -->
+  <!-- SECTION: IMAGE QUALITY -->
+  <!-- ════════════════════════════════════════ -->
+  <div class="section-label">01 — Image Quality pe seedha asar</div>
+  <table class="var-table">
+    <thead>
+      <tr>
+        <th>Variable</th>
+        <th>Default</th>
+        <th>Kya karta hai &amp; kya change hoga</th>
+        <th>Impact</th>
+      </tr>
+    </thead>
+    <tbody>
+
+      <tr>
+        <td><div class="var-name">IMAGE_SIZE</div></td>
+        <td><span class="var-default">256</span></td>
+        <td class="desc">
+          Image kitne pixels ki hogi training mein.<br>
+          <div class="effects">
+            <span class="pill pill-quality">↑ Quality — 512 pe zyada detail</span>
+            <span class="pill pill-vram">↑ VRAM — 4× zyada memory</span>
+            <span class="pill pill-speed">↓ Speed — 4× slow</span>
+          </div>
+          <br>256 = standard. 512 try karo agar A100 GPU ho. 128 karo agar CPU pe ho.
+        </td>
+        <td>
+          <div class="impact-wrap">
+            <div class="impact-bar-bg"><div class="impact-bar" style="width:95%;background:var(--accent-green)"></div></div>
+            <span class="impact-label">HIGH</span>
+          </div>
+        </td>
+      </tr>
+
+      <tr>
+        <td><div class="var-name">N_RESIDUALS</div></td>
+        <td><span class="var-default">9</span></td>
+        <td class="desc">
+          Generator ke andar kitne Residual Blocks honge — ye model ki "sochne ki capacity" hai.<br>
+          <div class="effects">
+            <span class="pill pill-quality">↑ 9 = 256px ke liye best</span>
+            <span class="pill pill-quality">↓ 6 = 128px ke liye kaafi</span>
+            <span class="pill pill-vram">↑ VRAM thoda badhta hai</span>
+          </div>
+          <br><strong>Rule:</strong> 256px → 9 rakho. 128px → 6 karo.
+        </td>
+        <td>
+          <div class="impact-wrap">
+            <div class="impact-bar-bg"><div class="impact-bar" style="width:80%;background:var(--accent-green)"></div></div>
+            <span class="impact-label">HIGH</span>
+          </div>
+        </td>
+      </tr>
+
+      <tr>
+        <td><div class="var-name">LAMBDA_CYCLE</div></td>
+        <td><span class="var-default">10.0</span></td>
+        <td class="desc">
+          Cycle Consistency Loss ka weight — ye ensure karta hai ki Photo→Painting→Photo wapas original jaisi aaye.<br>
+          <div class="effects">
+            <span class="pill pill-quality">↑ Badhao = content zyada preserve hoga</span>
+            <span class="pill pill-quality">↓ Ghatao = style zyada aggressive hoga (blur risk)</span>
+            <span class="pill pill-stable">Stability ke liye 10 best hai</span>
+          </div>
+          <br>5–20 ke beech rakhna. Kam karo toh painting style strong hogi lekin artifacts aa sakte hain.
+        </td>
+        <td>
+          <div class="impact-wrap">
+            <div class="impact-bar-bg"><div class="impact-bar" style="width:90%;background:var(--accent-green)"></div></div>
+            <span class="impact-label">HIGH</span>
+          </div>
+        </td>
+      </tr>
+
+      <tr>
+        <td><div class="var-name">LAMBDA_IDENTITY</div></td>
+        <td><span class="var-default">0.5</span></td>
+        <td class="desc">
+          Identity Loss — colors preserve karta hai. Agar photo mein green tree hai toh painting mein bhi greenish rahe.<br>
+          <div class="effects">
+            <span class="pill pill-quality">↑ Badhao = original colors maintain</span>
+            <span class="pill pill-quality">↓ 0 karo = full artistic liberty (colors shift)</span>
+          </div>
+          <br>Portrait ke liye 0.5–1.0 rakho. Abstract art ke liye 0 try karo.
+        </td>
+        <td>
+          <div class="impact-wrap">
+            <div class="impact-bar-bg"><div class="impact-bar" style="width:65%;background:var(--accent-green)"></div></div>
+            <span class="impact-label">MED</span>
+          </div>
+        </td>
+      </tr>
+
+    </tbody>
+  </table>
+
+  <!-- ════════════════════════════════════════ -->
+  <!-- SECTION: TRAINING SPEED / TIME -->
+  <!-- ════════════════════════════════════════ -->
+  <div class="section-label">02 — Training Time pe asar</div>
+  <table class="var-table">
+    <thead>
+      <tr>
+        <th>Variable</th>
+        <th>Default</th>
+        <th>Kya karta hai &amp; kya change hoga</th>
+        <th>Impact</th>
+      </tr>
+    </thead>
+    <tbody>
+
+      <tr>
+        <td><div class="var-name">EPOCHS</div></td>
+        <td><span class="var-default">200</span></td>
+        <td class="desc">
+          Kitni baar poora dataset dekhega model.<br>
+          <div class="effects">
+            <span class="pill pill-quality">↑ Badhao = better results</span>
+            <span class="pill pill-speed">↑ Training time directly proportional</span>
+          </div>
+          <br>Quick test ke liye 10–20. Decent results ke liye 50–100. Best ke liye 200.
+          <br><em>200 epoch ≈ T4 GPU pe ~8–12 hours</em>
+        </td>
+        <td>
+          <div class="impact-wrap">
+            <div class="impact-bar-bg"><div class="impact-bar" style="width:100%;background:var(--accent-orange)"></div></div>
+            <span class="impact-label">MAX</span>
+          </div>
+        </td>
+      </tr>
+
+      <tr>
+        <td><div class="var-name">BATCH_SIZE</div></td>
+        <td><span class="var-default">1</span></td>
+        <td class="desc">
+          Ek baar mein kitni images process hongi.<br>
+          <div class="effects">
+            <span class="pill pill-speed">↑ Badhao = thoda fast (marginal)</span>
+            <span class="pill pill-vram">↑ VRAM bahut zyada laagta hai</span>
+            <span class="pill pill-quality">CycleGAN ke liye 1 BEST hai</span>
+          </div>
+          <br><strong>Mat badlaao.</strong> CycleGAN paper khud 1 recommend karta hai — InstanceNorm batch=1 pe best kaam karta hai.
+        </td>
+        <td>
+          <div class="impact-wrap">
+            <div class="impact-bar-bg"><div class="impact-bar" style="width:30%;background:var(--accent-orange)"></div></div>
+            <span class="impact-label">LOW</span>
+          </div>
+        </td>
+      </tr>
+
+      <tr>
+        <td><div class="var-name">SAVE_EVERY</div></td>
+        <td><span class="var-default">5</span></td>
+        <td class="desc">
+          Har N epoch ke baad checkpoint save hoga.<br>
+          <div class="effects">
+            <span class="pill pill-speed">↑ Badhao = disk I/O kam, thoda fast</span>
+            <span class="pill pill-neutral">↓ Ghatao = zyada backups (disk space laagta hai)</span>
+          </div>
+          <br>Fast training ke liye 10–20 karo. Safe rehna hai toh 5 theek hai.
+        </td>
+        <td>
+          <div class="impact-wrap">
+            <div class="impact-bar-bg"><div class="impact-bar" style="width:15%;background:var(--accent-orange)"></div></div>
+            <span class="impact-label">LOW</span>
+          </div>
+        </td>
+      </tr>
+
+      <tr>
+        <td><div class="var-name">SAMPLE_EVERY</div></td>
+        <td><span class="var-default">1</span></td>
+        <td class="desc">
+          Har N epoch ke baad sample image grid save hoga.<br>
+          <div class="effects">
+            <span class="pill pill-speed">↑ 5 ya 10 karo = slightly faster training</span>
+            <span class="pill pill-neutral">1 = har epoch pe progress dekhte raho</span>
+          </div>
+          <br>Progress monitor karna ho toh 1. Speed chahiye toh 10 karo.
+        </td>
+        <td>
+          <div class="impact-wrap">
+            <div class="impact-bar-bg"><div class="impact-bar" style="width:20%;background:var(--accent-orange)"></div></div>
+            <span class="impact-label">LOW</span>
+          </div>
+        </td>
+      </tr>
+
+      <tr>
+        <td><div class="var-name">DECAY_EPOCH</div></td>
+        <td><span class="var-default">100</span></td>
+        <td class="desc">
+          Kaun se epoch ke baad Learning Rate slowly 0 pe aane lagega.<br>
+          <div class="effects">
+            <span class="pill pill-stable">↑ Badhao = zyada constant LR, faster early convergence</span>
+            <span class="pill pill-quality">↓ Ghatao = jaldi fine-tune phase shuru</span>
+          </div>
+          <br>EPOCHS/2 rakho hamesha. 200 epochs → 100 decay. 50 epochs → 25 decay.
+        </td>
+        <td>
+          <div class="impact-wrap">
+            <div class="impact-bar-bg"><div class="impact-bar" style="width:55%;background:var(--accent-purple)"></div></div>
+            <span class="impact-label">MED</span>
+          </div>
+        </td>
+      </tr>
+
+    </tbody>
+  </table>
+
+  <!-- ════════════════════════════════════════ -->
+  <!-- SECTION: LEARNING RATE & OPTIMIZER -->
+  <!-- ════════════════════════════════════════ -->
+  <div class="section-label">03 — Learning Rate &amp; Optimizer</div>
+  <table class="var-table">
+    <thead>
+      <tr>
+        <th>Variable</th>
+        <th>Default</th>
+        <th>Kya karta hai &amp; kya change hoga</th>
+        <th>Impact</th>
+      </tr>
+    </thead>
+    <tbody>
+
+      <tr>
+        <td><div class="var-name">LR</div></td>
+        <td><span class="var-default">2e-4</span></td>
+        <td class="desc">
+          Learning Rate — model kitni tezi se seekhega.<br>
+          <div class="effects">
+            <span class="pill pill-speed">↑ Badhao = fast but unstable (mode collapse risk)</span>
+            <span class="pill pill-quality">↓ Ghatao = stable lekin slow</span>
+            <span class="pill pill-stable">2e-4 GAN ke liye golden value hai</span>
+          </div>
+          <br><strong>Danger zone:</strong> 5e-4 se zyada mat karo — training crash ho sakti hai. 1e-4 safe alternative hai.
+        </td>
+        <td>
+          <div class="impact-wrap">
+            <div class="impact-bar-bg"><div class="impact-bar" style="width:85%;background:var(--accent-purple)"></div></div>
+            <span class="impact-label">HIGH</span>
+          </div>
+        </td>
+      </tr>
+
+      <tr>
+        <td><div class="var-name">BETA1</div></td>
+        <td><span class="var-default">0.5</span></td>
+        <td class="desc">
+          Adam optimizer ka momentum parameter.<br>
+          <div class="effects">
+            <span class="pill pill-stable">0.5 = GAN training ke liye standard</span>
+            <span class="pill pill-stable">0.9 (default Adam) = GAN mein unstable hota hai</span>
+          </div>
+          <br>Mat badlaao. GAN literature mein 0.5 proven value hai.
+        </td>
+        <td>
+          <div class="impact-wrap">
+            <div class="impact-bar-bg"><div class="impact-bar" style="width:40%;background:var(--accent-purple)"></div></div>
+            <span class="impact-label">MED</span>
+          </div>
+        </td>
+      </tr>
+
+      <tr>
+        <td><div class="var-name">BETA2</div></td>
+        <td><span class="var-default">0.999</span></td>
+        <td class="desc">
+          Adam ka second moment parameter — gradient variance track karta hai.<br>
+          <div class="effects">
+            <span class="pill pill-neutral">Default value almost always theek hai</span>
+          </div>
+          <br>Nahi badlna chahiye.
+        </td>
+        <td>
+          <div class="impact-wrap">
+            <div class="impact-bar-bg"><div class="impact-bar" style="width:10%;background:var(--muted)"></div></div>
+            <span class="impact-label">TINY</span>
+          </div>
+        </td>
+      </tr>
+
+    </tbody>
+  </table>
+
+  <!-- ════════════════════════════════════════ -->
+  <!-- SECTION: MISC -->
+  <!-- ════════════════════════════════════════ -->
+  <div class="section-label">04 — Misc / Path Variables</div>
+  <table class="var-table">
+    <thead>
+      <tr>
+        <th>Variable</th>
+        <th>Default</th>
+        <th>Kya karta hai</th>
+        <th>Impact</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><div class="var-name">NUM_SAMPLES</div></td>
+        <td><span class="var-default">6</span></td>
+        <td class="desc">
+          Sample grid mein kitni images dikhegi.<br>
+          <div class="effects">
+            <span class="pill pill-neutral">Sirf visualization pe asar, training pe nahi</span>
+          </div>
+        </td>
+        <td><div class="impact-wrap"><div class="impact-bar-bg"><div class="impact-bar" style="width:5%;background:var(--muted)"></div></div><span class="impact-label">NONE</span></div></td>
+      </tr>
+      <tr>
+        <td><div class="var-name">SEED</div></td>
+        <td><span class="var-default">42</span></td>
+        <td class="desc">
+          Random seed — same seed = reproducible results.<br>
+          <div class="effects">
+            <span class="pill pill-neutral">Change karo = alag random initialization, slightly different results</span>
+          </div>
+        </td>
+        <td><div class="impact-wrap"><div class="impact-bar-bg"><div class="impact-bar" style="width:5%;background:var(--muted)"></div></div><span class="impact-label">NONE</span></div></td>
+      </tr>
+      <tr>
+        <td><div class="var-name">DOMAIN_B</div></td>
+        <td><span class="var-default">"monet"</span></td>
+        <td class="desc">
+          Kis style mein convert karna hai — sirf label ke liye, actual data change karna hoga.<br>
+          <div class="effects">
+            <span class="pill pill-neutral">"vangogh" / "ukiyoe" / "cezanne" try karo — dataset bhi change karo saath mein</span>
+          </div>
+        </td>
+        <td><div class="impact-wrap"><div class="impact-bar-bg"><div class="impact-bar" style="width:5%;background:var(--muted)"></div></div><span class="impact-label">LABEL</span></div></td>
+      </tr>
+      <tr>
+        <td><div class="var-name">IN_CHANNELS</div></td>
+        <td><span class="var-default">3</span></td>
+        <td class="desc">
+          RGB images ke liye 3. Grayscale ke liye 1.<br>
+          <div class="effects">
+            <span class="pill pill-neutral">Normal use mein mat badlaao</span>
+          </div>
+        </td>
+        <td><div class="impact-wrap"><div class="impact-bar-bg"><div class="impact-bar" style="width:5%;background:var(--muted)"></div></div><span class="impact-label">FIXED</span></div></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <hr class="divider">
+
+  <!-- ════════════════════════════════════════ -->
+  <!-- SUMMARY CARDS -->
+  <!-- ════════════════════════════════════════ -->
+  <div class="section-label">05 — Quick Summary</div>
+  <div class="summary-grid">
+    <div class="sum-card">
+      <div class="sum-card-header">
+        <div class="sum-icon" style="background:rgba(61,214,140,0.12)">🖼️</div>
+        <h3 style="color:var(--accent-green)">Image Quality Badhani Hai?</h3>
+      </div>
+      <ul>
+        <li><strong>IMAGE_SIZE 512</strong> karo — sabse zyada farak</li>
+        <li><strong>EPOCHS 200</strong> full chalao — mat rokna</li>
+        <li><strong>N_RESIDUALS 9</strong> rakho (256px ke liye)</li>
+        <li><strong>LAMBDA_CYCLE 10</strong> — content blur hone se bachata hai</li>
+        <li><strong>LAMBDA_IDENTITY 0.5</strong> — colors realistic rakhta hai</li>
+      </ul>
+    </div>
+    <div class="sum-card">
+      <div class="sum-card-header">
+        <div class="sum-icon" style="background:rgba(255,154,60,0.12)">⚡</div>
+        <h3 style="color:var(--accent-orange)">Training Fast Karni Hai?</h3>
+      </div>
+      <ul>
+        <li><strong>IMAGE_SIZE 128</strong> — 4× faster + 4× less VRAM</li>
+        <li><strong>EPOCHS 50</strong> — decent results milenge</li>
+        <li><strong>N_RESIDUALS 6</strong> — 128px ke liye kaafi</li>
+        <li><strong>SAMPLE_EVERY 10</strong> — kam disk writes</li>
+        <li><strong>SAVE_EVERY 10</strong> — kam checkpoints</li>
+      </ul>
+    </div>
+    <div class="sum-card">
+      <div class="sum-card-header">
+        <div class="sum-icon" style="background:rgba(255,92,92,0.12)">💾</div>
+        <h3 style="color:var(--accent-red)">VRAM Kam Hai (T4 / Free Colab)?</h3>
+      </div>
+      <ul>
+        <li><strong>IMAGE_SIZE 256</strong> rakho max — 512 mat karo</li>
+        <li><strong>BATCH_SIZE 1</strong> — already set hai, badlaao mat</li>
+        <li><strong>N_RESIDUALS 6</strong> karo thoda save</li>
+        <li>Mixed precision (fp16) enable karo Colab mein</li>
+      </ul>
+    </div>
+    <div class="sum-card">
+      <div class="sum-card-header">
+        <div class="sum-icon" style="background:rgba(177,122,255,0.12)">🎯</div>
+        <h3 style="color:var(--accent-purple)">Training Unstable Hai?</h3>
+      </div>
+      <ul>
+        <li><strong>LR 1e-4</strong> karo — 2e-4 se aadha</li>
+        <li><strong>LAMBDA_CYCLE 10</strong> → <strong>15</strong> badhao</li>
+        <li><strong>BETA1 0.5</strong> — mat badlaao</li>
+        <li>ReplayBuffer already set hai — ye help karta hai</li>
+        <li><strong>DECAY_EPOCH</strong> pehle shuru karo (e.g. 75)</li>
+      </ul>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ════════════════════════════════════════ -->
+  <!-- QUICK PRESETS -->
+  <!-- ════════════════════════════════════════ -->
+  <div class="section-label">06 — Ready-made Presets (Copy-Paste karo)</div>
+  <div class="presets-grid">
+
+    <div class="preset-card preset-fast">
+      <h3 style="color:var(--accent-orange)">⚡ Quick Test</h3>
+      <div class="tag">~30 min on T4 | Low quality</div>
+      <pre><span class="key">IMAGE_SIZE</span>    = <span class="val">128</span>
+<span class="key">N_RESIDUALS</span>   = <span class="val">6</span>
+<span class="key">EPOCHS</span>        = <span class="val">20</span>
+<span class="key">DECAY_EPOCH</span>   = <span class="val">10</span>
+<span class="key">SAMPLE_EVERY</span>  = <span class="val">5</span>
+<span class="key">SAVE_EVERY</span>    = <span class="val">10</span></pre>
+    </div>
+
+    <div class="preset-card preset-bal">
+      <h3 style="color:var(--accent-blue)">⚖️ Balanced</h3>
+      <div class="tag">~3–4 hrs on T4 | Good quality</div>
+      <pre><span class="key">IMAGE_SIZE</span>    = <span class="val">256</span>
+<span class="key">N_RESIDUALS</span>   = <span class="val">9</span>
+<span class="key">EPOCHS</span>        = <span class="val">100</span>
+<span class="key">DECAY_EPOCH</span>   = <span class="val">50</span>
+<span class="key">LR</span>            = <span class="val">2e-4</span>
+<span class="key">LAMBDA_CYCLE</span>  = <span class="val">10.0</span></pre>
+    </div>
+
+    <div class="preset-card preset-best">
+      <h3 style="color:var(--accent-green)">🏆 Best Quality</h3>
+      <div class="tag">~10–12 hrs on T4 | Max quality</div>
+      <pre><span class="key">IMAGE_SIZE</span>    = <span class="val">256</span>
+<span class="key">N_RESIDUALS</span>   = <span class="val">9</span>
+<span class="key">EPOCHS</span>        = <span class="val">200</span>
+<span class="key">DECAY_EPOCH</span>   = <span class="val">100</span>
+<span class="key">LAMBDA_CYCLE</span>  = <span class="val">10.0</span>
+<span class="key">LAMBDA_IDENTITY</span>=<span class="val">0.5</span></pre>
+    </div>
+
+    <div class="preset-card preset-lite">
+      <h3 style="color:var(--accent-purple)">💻 CPU / No GPU</h3>
+      <div class="tag">Hours per epoch | Just for testing</div>
+      <pre><span class="key">IMAGE_SIZE</span>    = <span class="val">128</span>
+<span class="key">N_RESIDUALS</span>   = <span class="val">6</span>
+<span class="key">EPOCHS</span>        = <span class="val">10</span>
+<span class="key">DECAY_EPOCH</span>   = <span class="val">5</span>
+<span class="key">BATCH_SIZE</span>    = <span class="val">1</span>
+<span class="key">SAMPLE_EVERY</span>  = <span class="val">2</span></pre>
+    </div>
+
+  </div>
+
+</div>
+
+<footer>CycleGAN Config Reference · Zhu et al. 2017 · PyTorch Implementation</footer>
+
+</body>
+</html>
