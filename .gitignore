@@ -6,9 +6,12 @@
 *.svg
 my-react-app/
 src/
+*node_modules/
+*package-lock.json
+*package.json
+
 
 
 git add .
 git commit -m "Added code"
 git push
-
