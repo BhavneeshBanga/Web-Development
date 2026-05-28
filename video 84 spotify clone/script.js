@@ -34,11 +34,11 @@ async function main() {
     let songs = await  getsongs()
     console.log(songs);
     
-    var song = new Audio(songs[0]);
+    var song = new Audio(songs[1]);
+    document.getElementById("playsongbutton").addEventListener("click", () => {
+            song.play();
+        });
+    }
 
-        document.getElementById("playsongg").addEventListener("click", () => {
-                song.play();
-            });
-        }
 
 main()
