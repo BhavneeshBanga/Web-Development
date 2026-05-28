@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spotify - Web Player: Music for everyone</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="utility.css">
+
+</head>
+
+<body>
+
+    <div class="container flex bg-black">
+
+        <div class="left ">
+            <div class="home bg-grey rounded m-1 p-1">
+                <div class="logo"><img class="invert" src="logo.svg" alt=""></div>
+                <ul>
+                    <li> <img class="invert" src="home.svg" alt="home">Home</li>
+                    <li> <img class="invert" src="search.svg" alt="search">Search</li>
+                </ul>
+            </div>
+            <div class="library rounded bg-grey p-1 m-1">
+                <div class="heading">
+                    <img class="invert" src="playlist.svg" alt="">
+                    <h2>
+                        YourLibrary
+                    </h2>
+                </div>
+
+                <div class="songlist">
+                    <ul>
+                        <li>1. Song name</li>
+                    </ul>
+                </div>
+                <div class="footer">
+                    <div><a href="https://www.spotify.com/jp/legal/"><span>Legal</span></a></div>
+
+                    <div>
+                        <a href="https://www.spotify.com/jp/privacy/">
+                            <span>Privacy Center</span>
+                        </a>
+                    </div>
+
+                    <div>
+                        <a href="https://www.spotify.com/jp/legal/privacy-policy/">
+                            <span>Privacy Policy</span>
+                        </a>
+                    </div>
+
+                    <div>
+                        <a href="https://www.spotify.com/jp/legal/cookies-policy/">
+                            <span>Cookies</span>
+                        </a>
+                    </div>
+
+                    <div>
+                        <a href="https://www.spotify.com/jp/legal/privacy-policy/#s3">
+                            <span>About Ads</span>
+                        </a>
+                    </div>
+
+                    <div>
+                        <a href="https://www.spotify.com/jp/accessibility/">
+                            <span>Accessibility</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+        <div class="right  bg-grey rounded ">
+            <div class="header">
+                <div class="nav">
+                    <!-- Less Than (<) -->
+                    <svg xmlns="http://www.w3.org/2000/svg" width="29" height="29" viewBox="0 0 24 24" fill="white">
+
+                        <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z" />
+                    </svg>
+
+
+                    <!-- Greater Than (>) -->
+                    <svg xmlns="http://www.w3.org/2000/svg" width="29" height="29" viewBox="0 0 24 24" fill="white">
+
+                        <path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z" />
+                    </svg>
+
+
+                </div>
+                <div class="buttons">
+                    <button class="signupbtn">Signup</button>
+                    <button id = "playsongg" class="loginbtn">Log in</button>
+                </div>
+            </div>
+
+
+            <div class="spotifyPlaylist">
+                <h1>Spotify Playlist</h1>
+                <div class="cardContainer">
+                    <div class="card ">
+                        <div class="play">
+
+                            <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 24 24"
+                                fill="none">
+                                <circle cx="12" cy="12" r="10" fill="#1DB954" />
+                                <path d="M10 8L16 12L10 16V8Z" fill="black" />
+                            </svg>
+
+                        </div>
+
+                        <img src="https://tse3.mm.bing.net/th/id/OIP.qVUkYgLqmHFiSZ4_7IFErwHaHa?rs=1&pid=ImgDetMain&o=7&rm=3"
+                            alt="">
+                        <h2>Happy Hits!</h2>
+                        <p>Hits to boost your mood and fill you with happiness</p>
+                    </div>
+
+                    <div class="card ">
+                        <div class="play">
+
+                            <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 24 24"
+                                fill="none">
+                                <circle cx="12" cy="12" r="10" fill="#1DB954" />
+                                <path d="M10 8L16 12L10 16V8Z" fill="black" />
+                            </svg>
+
+                        </div>
+
+                        <img src="https://tse3.mm.bing.net/th/id/OIP.qVUkYgLqmHFiSZ4_7IFErwHaHa?rs=1&pid=ImgDetMain&o=7&rm=3"
+                            alt="">
+                        <h2>Happy Hits!</h2>
+                        <p>Hits to boost your mood and fill you with happiness</p>
+                    </div>
+                    <div class="playbar">
+                        <div class="songinfo"></div>
+                        <div class="songbuttons">
+                            <img src="prevsong.svg" alt="">
+                            <img src="play.svg" alt="">
+                            <img src="nextsong.svg" alt="">
+                        </div>
+                        <div class="songtime"></div>
+                    </div>
+                </div> 
+            </div>
+        </div>
+        <script src="script.js"></script>
+</body>
+
+</html>
