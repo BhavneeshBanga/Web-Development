@@ -269,6 +269,7 @@
       right: 10px;
       background-color: #282828;
       /* width: 90%; */
+      width: calc((100vw - 60px));
       padding: 12px;
       width: 70vw;
       border-radius: 19px;
@@ -347,6 +348,8 @@
 
 
   .seekbar {
+              width: calc((100vw - 40px));
+
       cursor: pointer;
       height: 8px;
       width: 98%;
@@ -406,13 +409,11 @@
           position: absolute;
           left: -110%;
           transition: all .3s;
-
           z-index: 1;
-
           width: 100%;
+        }
 
 
-      }
 
       .left .close {
         display: block;
@@ -431,15 +432,22 @@
 
       .playbar {
           position: absolute;
-          width: 95vw;
+          /* width: 88vw; */
+          width: calc((100vw - 60px));
+          /* width: 93%; */
           bottom: 0px;
           left: 0;
           right: 0;
           border-radius: 0;
           z-index: 99;
+        }
+        .seekbar{
+            width: 90%;
+                      width: calc((100vw - 80px));
+
+        }
 
 
-      }
 
       .hamburger {
           display: block;
