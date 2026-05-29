@@ -4,11 +4,13 @@
 *.jpg
 *.png
 *.svg
+*.ico
 my-react-app/
 src/
 *node_modules/
 *package-lock.json
 *package.json
+*songs/
 
 
 
