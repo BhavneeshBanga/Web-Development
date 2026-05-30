@@ -139,11 +139,12 @@
   }
 
 
-  .card:hover{
-    background-color: rgb(60, 58, 58);
-    transition: all .4s ease;
-    cursor: pointer;
+  .card:hover {
+      background-color: rgb(60, 58, 58);
+      transition: all .4s ease;
+      cursor: pointer;
   }
+
   .card>* {
       padding-top: 10px;
   }
@@ -311,13 +312,30 @@
 
 
 
+  .range input {
+      cursor: pointer;
+  }
+
+
   .volume {
       display: flex;
       flex-direction: row;
       justify-content: center;
       align-items: center;
       gap: 9px;
+      cursor: pointer;
+      transition: all 0.25s ease;
   }
+
+  .volume>img:hover {
+      transform: scale(1.06);
+      cursor: pointer;
+  }
+
+  .volume>img:active {
+      transform: scale(0.96);
+  }
+
 
   .songbuttons {
       /* cursor: pointer; */
@@ -416,6 +434,7 @@
 
   .hamburger {
       display: none;
+      cursor: pointer;
 
   }
 
@@ -549,10 +568,10 @@
 
 
 
-    @media (max-width: 400px) {
+  @media (max-width: 400px) {
 
 
-        .card{
-            width: 98vw;
-        }
-    }
+      .card {
+          width: 98vw;
+      }
+  }
