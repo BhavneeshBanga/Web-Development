@@ -1,11 +1,11 @@
 // console.log('lets write javascript');
 let currentSong = new Audio;
 play = document.getElementById("play")
-
+let songs;
 
 async function getsongs() {
 
-    let a = await fetch("http://10.143.181.14:5500/songs/")
+    let a = await fetch("http://10.82.27.14:5500/songs/")
     let response = await a.text();
     // console.log(response);
 
@@ -59,12 +59,12 @@ function getRandomInt(num) {
 
 
 async function main() {
-    let songs = await getsongs()
+    songs = await getsongs()
     // console.log(songs);
     // console.log("songs length : ", songs.length);
 
     let n = getRandomInt(songs.length)
-    
+
     playMusic(songs[n], true);
 
 
@@ -138,17 +138,48 @@ async function main() {
 
 
     //addd an event listenr for hamburger touch icon
-    document.querySelector(".hamburger").addEventListener("click" , ()=>{
+    document.querySelector(".hamburger").addEventListener("click", () => {
         document.querySelector(".left").style.left = "0";
     })
-    
+
     //addd an event listenr for close hamburger 
-    document.querySelector(".close").addEventListener("click" , ()=>{
+    document.querySelector(".close").addEventListener("click", () => {
         document.querySelector(".left").style.left = "-120%";
     })
 
 
 
+    //add an event listner for play previous song
+    document.querySelector(".playprevsongbutton").addEventListener("click", () => {
+        let index = ("index: ", songs.indexOf(currentSong.src.split("/").slice(-1)[0]));
+
+        if (index === 0) {
+            index = songs.length;
+        }
+        playMusic(songs[(index - 1) % (songs.length)]);
+    })
+
+    //add an event listner for play next song
+    document.querySelector(".playnextsongbutton").addEventListener("click", () => {
+
+        let index = ("index: ", songs.indexOf(currentSong.src.split("/").slice(-1)[0]));
+        playMusic(songs[(index + 1) % (songs.length)]);
+    })
+
+
+    //add an event listner to handle volume
+    // let volumeSlider = document.querySelector(".volumekey");
+    // volumeSlider.addEventListener("input", () => {
+    //     currentSong.volume = volumeSlider.value / 100;
+    // });
+
+
+        //add an event listner to handle volume
+document.querySelector(".range").getElementsByTagName("input")[0].addEventListener("change", (e)=>{
+    // console.log(e, e.target, e.target.value);
+    currentSong.volume = parseInt(e.target.value)/100;
+    
+})
 
 
 
