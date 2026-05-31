@@ -11,6 +11,11 @@ src/
 *package-lock.json
 *package.json
 *songs/
+*.next/
+*eslint.config.mjs
+*next.config.mjs
+*jsconfig.json
+*postcss.config.mjs
 
 
 
