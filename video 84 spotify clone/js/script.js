@@ -8,7 +8,7 @@ let originalSoundValue;  //its for volume button
 async function getsongs(folder) {
     currFolder = folder
 
-    let a = await fetch(`http://10.82.27.14:5500/${folder}/`)
+    let a = await fetch(`http://10.103.238.14:5500/${folder}/`)
     let response = await a.text();
     // console.log(response);
 
@@ -88,8 +88,8 @@ function getRandomInt(num) {
 
 async function displayAlbums() {
     // folder = currFolder
-    let a = await fetch(`http://10.82.27.14:5500/songs/`)
-    // let a = await fetch(`http://127.0.0.1:8080/songs/`)
+    let a = await fetch(`http://10.103.238.14:5500/songs/`)
+    // let a = await fetch(`127.0.0.1:8080/songs/`)
     let response = await a.text();
 
     let div = document.createElement("div")
@@ -112,13 +112,13 @@ async function displayAlbums() {
             let folder = e.href.split("/songs/")[1]
             console.log(folder);
             //         //get the metadata of the folder
-            let a = await fetch(`http://10.82.27.14:5500/songs/${folder}/info.json`)
+            let a = await fetch(`http://10.103.238.14:5500/songs/${folder}/info.json`)
             let response = await a.json();
             console.log(response);
             cardContainer.innerHTML = cardContainer.innerHTML + `<div data-folder="${folder}" class="card ">
                         <div class="play">
 
-                            <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 24 24"
+                            <svg xmlns="www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 24 24"
                                 fill="none">
                                 <circle cx="12" cy="12" r="10" fill="#1DB954" />
                                 <path d="M10 8L16 12L10 16V8Z" fill="black" />
@@ -191,6 +191,12 @@ async function main() {
             `${formatTime(currentSong.currentTime)} / ${formatTime(currentSong.duration)}`;
 
         document.querySelector(".circle").style.left = ((currentSong.currentTime / currentSong.duration) * 100) + "%";
+        let progress = (currentSong.currentTime / currentSong.duration) * 100;
+
+document.querySelector(".seekbar").style.background =
+    `linear-gradient(to right,
+        green ${progress}%,
+        white ${progress}%)`;
 
     })
 
@@ -261,7 +267,7 @@ async function main() {
             currentSong.pause();
             play.src = "img/play.svg"
         } else {
-            currentSong.volu1me = 0.4;
+            currentSong.volume = 0.4;
             e.target.src = e.target.src.replace("img/mute.svg", "img/volume.svg")
             document.querySelector(".range").getElementsByTagName("input")[0].value = 40;
             currentSong.play();

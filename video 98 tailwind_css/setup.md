@@ -4,7 +4,6 @@ Step 1 : Run the following commands
 
 ```
 npm init -y
-npm install tailwindcss @tailwindcss/cli
 ```
 
 
