@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home / X</title>
+    <link rel="shortcut icon" href="https://abs.twimg.com/favicons/twitter-pip.3.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --bg: #000;
+            --border: rgb(47,51,54);
+            --hover-bg: rgb(22,24,28);
+            --text-muted: rgb(137,144,150);
+            --blue: #1d9bf0;
+            --sidebar-width: 275px;
+            --sidebar-mid: 88px;
+            --sidebar-small: 68px;
+        }
+
+        body { background: var(--bg); color: #fff; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+
+        /* ── Layout ── */
+        .layout {
+            display: flex;
+            max-width: 1300px;
+            margin: 0 auto;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        /* ── Sidebar ── */
+        .sidebar {
+            width: var(--sidebar-width);
+            flex-shrink: 0;
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            padding: 0 12px;
+            border-right: 1px solid var(--border);
+        }
+
+        .logo-wrap {
+            padding: 12px;
+            margin-bottom: 4px;
+            display: inline-flex;
+            border-radius: 9999px;
+            cursor: pointer;
+            transition: background .2s;
+        }
+        .logo-wrap:hover { background: rgba(255,255,255,.1); }
+        .logo-wrap svg { width: 32px; height: 32px; fill: #fff; }
+
+        .nav { display: flex; flex-direction: column; gap: 4px; }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding: 12px;
+            border-radius: 9999px;
+            cursor: pointer;
+            transition: background .2s;
+            font-size: 20px;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+        .nav-item:hover { background: var(--hover-bg); }
+        .nav-item .material-icons { font-size: 26px; flex-shrink: 0; }
+        .nav-label { font-size: 20px; }
+
+        .post-btn {
+            margin-top: 16px;
+            background: #fff;
+            color: #000;
+            border: none;
+            border-radius: 9999px;
+            padding: 16px 32px;
+            font-size: 17px;
+            font-weight: 700;
+            cursor: pointer;
+            width: 100%;
+            transition: background .2s;
+        }
+        .post-btn:hover { background: rgba(231,233,234,1); }
+
+        .profile-btn {
+            margin-top: auto;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            border-radius: 9999px;
+            cursor: pointer;
+            transition: background .2s;
+        }
+        .profile-btn:hover { background: var(--hover-bg); }
+        .profile-btn img { width: 40px; height: 40px; border-radius: 50%; }
+
+        /* ── Feed ── */
+        .feed {
+            flex: 1;
+            min-width: 0;
+            border-right: 1px solid var(--border);
+        }
+
+        .feed-tabs {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            backdrop-filter: blur(12px);
+            background: rgba(0,0,0,.85);
+            display: flex;
+            border-bottom: 1px solid var(--border);
+        }
+        .tab {
+            flex: 1;
+            text-align: center;
+            padding: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            position: relative;
+            transition: background .2s;
+        }
+        .tab:hover { background: var(--hover-bg); }
+        .tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 50%;
+            transform: translateX(-50%);
+            width: 56px; height: 4px;
+            background: var(--blue);
+            border-radius: 9999px;
+        }
+        .tab.inactive { color: var(--text-muted); }
+
+        /* Compose */
+        .compose {
+            display: flex;
+            gap: 12px;
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--border);
+        }
+        .compose img { width: 44px; height: 44px; border-radius: 50%; flex-shrink: 0; }
+        .compose-inner { flex: 1; min-width: 0; }
+        .compose-input {
+            width: 100%;
+            background: transparent;
+            border: none;
+            outline: none;
+            color: #fff;
+            font-size: 20px;
+            padding: 8px 0 12px;
+            resize: none;
+        }
+        .compose-input::placeholder { color: var(--text-muted); }
+        .compose-everyone {
+            color: var(--blue);
+            font-weight: 700;
+            font-size: 15px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            cursor: pointer;
+        }
+        .compose-divider { height: 1px; background: var(--border); margin: 10px 0; }
+        .compose-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .compose-icons { display: flex; gap: 4px; }
+        .compose-icon { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: background .2s; }
+        .compose-icon:hover { background: rgba(29,155,240,.1); }
+        .compose-icon img { width: 20px; filter: invert(42%) sepia(89%) saturate(593%) hue-rotate(178deg) brightness(96%) contrast(96%); }
+        .post-mini-btn {
+            background: var(--blue);
+            color: #fff;
+            border: none;
+            border-radius: 9999px;
+            padding: 8px 20px;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+        .post-mini-btn:hover { background: #1a8cd8; }
+
+        /* Posts */
+        .post {
+            display: flex;
+            gap: 12px;
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--border);
+            transition: background .15s;
+            cursor: pointer;
+        }
+        .post:hover { background: rgba(255,255,255,.03); }
+        .post-avatar { width: 44px; height: 44px; border-radius: 50%; flex-shrink: 0; }
+        .post-body { flex: 1; min-width: 0; }
+        .post-meta { display: flex; gap: 6px; flex-wrap: wrap; align-items: baseline; margin-bottom: 4px; }
+        .post-name { font-weight: 700; }
+        .post-name:hover { text-decoration: underline; }
+        .post-handle { color: var(--text-muted); font-size: 15px; }
+        .post-text { margin-bottom: 12px; line-height: 1.5; }
+        .post-image { width: 100%; max-width: 100%; border-radius: 16px; display: block; margin-bottom: 12px; }
+        .post-actions { display: flex; gap: 20px; }
+        .action-btn {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--text-muted);
+            font-size: 14px;
+            cursor: pointer;
+            padding: 6px;
+            border-radius: 9999px;
+            transition: color .2s, background .2s;
+        }
+        .action-btn:hover { color: var(--blue); background: rgba(29,155,240,.1); }
+        .action-btn img { width: 18px; filter: brightness(0) invert(.6); transition: filter .2s; }
+        .action-btn:hover img { filter: invert(42%) sepia(89%) saturate(593%) hue-rotate(178deg) brightness(96%) contrast(96%); }
+
+        /* ── Right panel ── */
+        .right-panel {
+            width: 350px;
+            flex-shrink: 0;
+            padding: 0 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .search-bar {
+            position: sticky;
+            top: 0;
+            padding: 8px 0;
+            background: var(--bg);
+            z-index: 5;
+        }
+        .search-bar input {
+            width: 100%;
+            background: rgb(32,35,39);
+            border: 1px solid transparent;
+            border-radius: 9999px;
+            color: #fff;
+            padding: 10px 16px;
+            font-size: 15px;
+            outline: none;
+            transition: border-color .2s, background .2s;
+        }
+        .search-bar input:focus { background: #000; border-color: var(--blue); }
+        .search-bar input::placeholder { color: var(--text-muted); }
+
+        .widget {
+            background: rgb(22,24,28);
+            border-radius: 16px;
+            padding: 16px 0;
+        }
+        .widget-title { font-size: 20px; font-weight: 800; padding: 0 16px 12px; }
+
+        .trend-item {
+            padding: 12px 16px;
+            cursor: pointer;
+            transition: background .2s;
+        }
+        .trend-item:hover { background: var(--hover-bg); }
+        .trend-category { color: var(--text-muted); font-size: 13px; }
+        .trend-name { font-weight: 700; font-size: 15px; margin: 2px 0; }
+        .trend-count { color: var(--text-muted); font-size: 13px; }
+
+        .follow-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 16px;
+            cursor: pointer;
+            transition: background .2s;
+        }
+        .follow-item:hover { background: var(--hover-bg); }
+        .follow-info { display: flex; align-items: center; gap: 10px; }
+        .follow-avatar { width: 44px; height: 44px; border-radius: 50%; background: #333; flex-shrink: 0; }
+        .follow-name { font-weight: 700; font-size: 15px; }
+        .follow-handle { color: var(--text-muted); font-size: 13px; }
+        .follow-btn {
+            background: #fff;
+            color: #000;
+            border: none;
+            border-radius: 9999px;
+            padding: 7px 16px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+        .follow-btn:hover { background: rgba(231,233,234,.9); }
+        .show-more { color: var(--blue); padding: 12px 16px; cursor: pointer; font-size: 15px; }
+        .show-more:hover { text-decoration: underline; }
+
+        /* ── Mobile nav bar ── */
+        .mobile-nav {
+            display: none;
+            position: fixed;
+            bottom: 0; left: 0; right: 0;
+            background: rgba(0,0,0,.95);
+            border-top: 1px solid var(--border);
+            z-index: 100;
+            justify-content: space-around;
+            padding: 8px 0;
+        }
+        .mobile-nav-item { display: flex; flex-direction: column; align-items: center; padding: 6px 16px; cursor: pointer; border-radius: 8px; }
+        .mobile-nav-item .material-icons { font-size: 26px; }
+
+        /* ── Responsive breakpoints ── */
+
+        /* Tablet: hide right panel */
+        @media (max-width: 1100px) {
+            .right-panel { display: none; }
+            .feed { border-right: none; }
+        }
+
+        /* Mid: collapse sidebar to icons only */
+        @media (max-width: 900px) {
+            .sidebar { width: var(--sidebar-mid); padding: 0 4px; align-items: center; }
+            .nav-label { display: none; }
+            .nav-item { justify-content: center; gap: 0; padding: 12px; }
+            .post-btn { padding: 14px; font-size: 0; border-radius: 50%; width: 52px; height: 52px; display: flex; align-items: center; justify-content: center; }
+            .post-btn::before { content: '+'; font-size: 28px; color: #000; font-weight: 900; }
+            .profile-btn .profile-meta { display: none; }
+            .profile-btn { justify-content: center; }
+        }
+
+        /* Small: hide sidebar, show mobile nav */
+        @media (max-width: 600px) {
+            .sidebar { display: none; }
+            .mobile-nav { display: flex; }
+            body { padding-bottom: 60px; }
+            .compose { padding: 10px 12px; }
+            .post { padding: 10px 12px; }
+            .post-actions { gap: 12px; }
+            .action-btn { font-size: 12px; }
+        }
+
+        /* Extra small */
+        @media (max-width: 400px) {
+            .tab { padding: 14px 8px; font-size: 15px; }
+            .post-name, .post-handle { font-size: 14px; }
+            .compose-input { font-size: 17px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="layout">
+
+    <!-- ── Sidebar ── -->
+    <aside class="sidebar">
+        <div class="logo-wrap">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M21.742 21.75l-7.563-11.179 7.056-8.321h-2.456l-5.691 6.714-4.54-6.714H2.359l7.29 10.776L2.25 21.75h2.456l6.035-7.118 4.818 7.118h6.191-.008zM7.739 3.818L18.81 20.182h-2.447L5.29 3.818h2.447z"/>
+            </svg>
+        </div>
+        <nav class="nav">
+            <div class="nav-item"><span class="material-icons">home</span><span class="nav-label">Home</span></div>
+            <div class="nav-item"><span class="material-icons">explore</span><span class="nav-label">Explore</span></div>
+            <div class="nav-item"><span class="material-icons">notifications</span><span class="nav-label">Notifications</span></div>
+            <div class="nav-item"><span class="material-icons">mail_outline</span><span class="nav-label">Messages</span></div>
+            <div class="nav-item"><span class="material-icons">auto_awesome</span><span class="nav-label">Grok</span></div>
+            <div class="nav-item"><span class="material-icons">list</span><span class="nav-label">Lists</span></div>
+            <div class="nav-item"><span class="material-icons">bookmarks</span><span class="nav-label">Bookmarks</span></div>
+            <div class="nav-item"><span class="material-icons">mode_comment</span><span class="nav-label">Communities</span></div>
+            <div class="nav-item"><span class="material-icons">workspace_premium</span><span class="nav-label">Premium</span></div>
+            <div class="nav-item"><span class="material-icons">person_outline</span><span class="nav-label">Profile</span></div>
+            <div class="nav-item"><span class="material-icons">more_horiz</span><span class="nav-label">More</span></div>
+            <button class="post-btn">Post</button>
+        </nav>
+        <div class="profile-btn">
+            <img src="https://pbs.twimg.com/profile_images/2017833631860117505/R1HwUq6V_normal.png" alt="avatar">
+            <div class="profile-meta">
+                <div style="font-weight:700;font-size:15px;">User Name</div>
+                <div style="color:var(--text-muted);font-size:13px;">@username</div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- ── Feed ── -->
+    <main class="feed">
+        <div class="feed-tabs">
+            <div class="tab active">For You</div>
+            <div class="tab inactive">Following</div>
+        </div>
+
+        <!-- Compose -->
+        <div class="compose">
+            <img src="https://pbs.twimg.com/profile_images/2017833631860117505/R1HwUq6V_normal.png" alt="">
+            <div class="compose-inner">
+                <textarea class="compose-input" rows="2" placeholder="What's happening?"></textarea>
+                <div class="compose-everyone">
+                    <span style="font-size:16px;" class="material-icons">public</span>
+                    Everyone can reply
+                </div>
+                <div class="compose-divider"></div>
+                <div class="compose-actions">
+                    <div class="compose-icons">
+                        <div class="compose-icon"><img src="https://abs.twimg.com/icons/media/media-dark.svg" onerror="this.style.display='none'" alt="📷"></div>
+                        <div class="compose-icon"><span class="material-icons" style="color:var(--blue);font-size:20px;">gif_box</span></div>
+                        <div class="compose-icon"><span class="material-icons" style="color:var(--blue);font-size:20px;">poll</span></div>
+                        <div class="compose-icon"><span class="material-icons" style="color:var(--blue);font-size:20px;">emoji_emotions</span></div>
+                        <div class="compose-icon"><span class="material-icons" style="color:var(--blue);font-size:20px;">schedule</span></div>
+                        <div class="compose-icon"><span class="material-icons" style="color:var(--blue);font-size:20px;">location_on</span></div>
+                    </div>
+                    <button class="post-mini-btn">Post</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Post 1 -->
+        <article class="post">
+            <img class="post-avatar" src="https://pbs.twimg.com/profile_images/2017833631860117505/R1HwUq6V_normal.png" alt="">
+            <div class="post-body">
+                <div class="post-meta">
+                    <span class="post-name">non aesthetic things</span>
+                    <span class="post-handle">@PicturesFolder · 6h</span>
+                </div>
+                <div class="post-text">legend</div>
+                <img class="post-image" src="https://pbs.twimg.com/media/HJvd7HvbUAAnc6Y?format=jpg&name=360x360" alt="post image" loading="lazy">
+                <div class="post-actions">
+                    <div class="action-btn"><span class="material-icons" style="font-size:18px;color:inherit;">chat_bubble_outline</span> 23</div>
+                    <div class="action-btn"><span class="material-icons" style="font-size:18px;color:inherit;">repeat</span> 123</div>
+                    <div class="action-btn"><span class="material-icons" style="font-size:18px;color:inherit;">favorite_border</span> 144</div>
+                    <div class="action-btn"><span class="material-icons" style="font-size:18px;color:inherit;">bar_chart</span> 195</div>
+                    <div class="action-btn"><span class="material-icons" style="font-size:18px;color:inherit;">ios_share</span> 51k</div>
+                </div>
+            </div>
+        </article>
+
+        <!-- Post 2 -->
+        <article class="post">
+            <img class="post-avatar" src="https://pbs.twimg.com/profile_images/2017833631860117505/R1HwUq6V_normal.png" alt="">
+            <div class="post-body">
+                <div class="post-meta">
+                    <span class="post-name">non aesthetic things</span>
+                    <span class="post-handle">@PicturesFolder · 6h</span>
+                </div>
+                <div class="post-text">legend</div>
+                <img class="post-image" src="https://pbs.twimg.com/media/HHPoPJhWIAALJh0?format=jpg&name=small" alt="post image" loading="lazy">
+                <div class="post-actions">
+                    <div class="action-btn"><span class="material-icons" style="font-size:18px;color:inherit;">chat_bubble_outline</span> 23</div>
+                    <div class="action-btn"><span class="material-icons" style="font-size:18px;color:inherit;">repeat</span> 123</div>
+                    <div class="action-btn"><span class="material-icons" style="font-size:18px;color:inherit;">favorite_border</span> 144</div>
+                    <div class="action-btn"><span class="material-icons" style="font-size:18px;color:inherit;">bar_chart</span> 195</div>
+                    <div class="action-btn"><span class="material-icons" style="font-size:18px;color:inherit;">ios_share</span> 51k</div>
+                </div>
+            </div>
+        </article>
+
+        <!-- Post 3 -->
+        <article class="post">
+            <img class="post-avatar" src="https://pbs.twimg.com/profile_images/2017833631860117505/R1HwUq6V_normal.png" alt="">
+            <div class="post-body">
+                <div class="post-meta">
+                    <span class="post-name">non aesthetic things</span>
+                    <span class="post-handle">@PicturesFolder · 6h</span>
+                </div>
+                <div class="post-text">legend</div>
+                <img class="post-image" src="https://pbs.twimg.com/media/HJvd7HvbUAAnc6Y?format=jpg&name=360x360" alt="post image" loading="lazy">
+                <div class="post-actions">
+                    <div class="action-btn"><span class="material-icons" style="font-size:18px;color:inherit;">chat_bubble_outline</span> 23</div>
+                    <div class="action-btn"><span class="material-icons" style="font-size:18px;color:inherit;">repeat</span> 123</div>
+                    <div class="action-btn"><span class="material-icons" style="font-size:18px;color:inherit;">favorite_border</span> 144</div>
+                    <div class="action-btn"><span class="material-icons" style="font-size:18px;color:inherit;">bar_chart</span> 195</div>
+                    <div class="action-btn"><span class="material-icons" style="font-size:18px;color:inherit;">ios_share</span> 51k</div>
+                </div>
+            </div>
+        </article>
+    </main>
+
+    <!-- ── Right Panel ── -->
+    <aside class="right-panel">
+        <div class="search-bar">
+            <input type="text" placeholder="🔍  Search">
+        </div>
+
+        <div class="widget">
+            <div class="widget-title">What's happening</div>
+            <div class="trend-item">
+                <div class="trend-category">Trending in India</div>
+                <div class="trend-name">#Orry</div>
+                <div class="trend-count">40.2K posts</div>
+            </div>
+            <div class="trend-item">
+                <div class="trend-category">Trending in India</div>
+                <div class="trend-name">#MissileAttack</div>
+                <div class="trend-count">40.6K posts</div>
+            </div>
+            <div class="trend-item">
+                <div class="trend-category">Trending in India</div>
+                <div class="trend-name">#MalavikaMohanan</div>
+                <div class="trend-count">1,880 posts</div>
+            </div>
+            <div class="trend-item">
+                <div class="trend-category">Trending in India</div>
+                <div class="trend-name">#stockmarketcrash</div>
+                <div class="trend-count">19.2K posts</div>
+            </div>
+            <div class="show-more">Show more</div>
+        </div>
+
+        <div class="widget">
+            <div class="widget-title">Who to follow</div>
+            <div class="follow-item">
+                <div class="follow-info">
+                    <div class="follow-avatar" style="background:#2d5be3;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:18px;">B</div>
+                    <div>
+                        <div class="follow-name">BhavneeshBanga</div>
+                        <div class="follow-handle">@BhaviBanga</div>
+                    </div>
+                </div>
+                <button class="follow-btn">Follow</button>
+            </div>
+            <div class="follow-item">
+                <div class="follow-info">
+                    <div class="follow-avatar" style="background:#e34c2d;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:18px;">F</div>
+                    <div>
+                        <div class="follow-name">F4Facts</div>
+                        <div class="follow-handle">@f4facts</div>
+                    </div>
+                </div>
+                <button class="follow-btn">Follow</button>
+            </div>
+            <div class="show-more">Show more</div>
+        </div>
+    </aside>
+</div>
+
+<!-- ── Mobile Bottom Nav ── -->
+<nav class="mobile-nav">
+    <div class="mobile-nav-item"><span class="material-icons">home</span></div>
+    <div class="mobile-nav-item"><span class="material-icons">explore</span></div>
+    <div class="mobile-nav-item" style="background:var(--blue);border-radius:50%;width:44px;height:44px;display:flex;align-items:center;justify-content:center;color:#fff;">
+        <span class="material-icons">add</span>
+    </div>
+    <div class="mobile-nav-item"><span class="material-icons">notifications</span></div>
+    <div class="mobile-nav-item"><span class="material-icons">mail_outline</span></div>
+</nav>
+
+</body>
+</html>
