@@ -6,14 +6,22 @@ const fs = require("fs")
 const blog = require('./routes/blog')
 
 app.use(express.static("public"));
+
 app.use('/blog', blog)
 
-//middleware 1
+//middleware 1  Logger for our application
 //next ka meaning agla middleware chalega
 app.use((req, res, next) => {
+    function getTodayDateWithTimezone() {
+        const now = new Date();
+        // Adjust for local timezone offset
+        const local = new Date(now.getTime() - now.getTimezoneOffset() * 60000);
+        return local.toISOString().split('T')[0];
+    }
     console.log(req.headers);
     req.bhavi = 'i am bhavi bhai'
-    fs.appendFileSync("Logs.txt", `${Date.now()} is a ${req.method}\n`)
+    let date = getTodayDateWithTimezone()
+    fs.appendFileSync("Logs.txt", `${Date.now()} on ${date} is a ${req.method}\n`)
     console.log(`${Date.now()} is a ${req.method}`);
     // res.send("HACKED!!")
     next();
@@ -23,7 +31,7 @@ app.use((req, res, next) => {
 app.use((req, res, next) => {
     console.log('m2');
     next();
-})              
+})
 
 
 // ----handler

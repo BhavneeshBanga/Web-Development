@@ -1,19 +1,57 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Testing Post request</title>
+    <title>POST Request Demo</title>
 </head>
 <body>
+
+    <h2>Enter Name</h2>
+
+    <form id="myForm">
+        <input
+            type="text"
+            id="name"
+            placeholder="Enter your name"
+        >
+
+        <button type="submit">
+            Send
+        </button>
+    </form>
+
     <script>
-        async function testpost(){
-            let a = await fetch("/", {method : "PUT"})
-            let b = await a.text()
-            console.log(b);
-        }
-        testpost()
+
+        const form = document.getElementById("myForm");
+
+        form.addEventListener("submit", async (e) => {
+
+            e.preventDefault();
+
+            const name = document.getElementById("name").value;
+
+            const response = await fetch(
+                "http://localhost:3000/",
+                {
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+
+                    body: JSON.stringify({
+                        name: name
+                    })
+                }
+            );
+
+            const data = await response.text();
+
+            console.log(data);
+
+            alert(data);
+        });
+
     </script>
-    
+
 </body>
 </html>

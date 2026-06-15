@@ -19,20 +19,19 @@ const port = 3000;
 
 app.use(express.static('public'));
 
-//app.get or app.post or app.put or app.delete
-// (path, handler)
-// app.get('/about', (req, res) => {
-//   res.send('Hello about');
-// });
+// app.get or app.post or app.put or app.delete(path, handler)
+app.get('/about', (req, res) => {
+  res.send('Hello about');
+});
 
-// app.get('/contact', (req, res) => {
-//   res.send('Hello contant');
-// });
+app.get('/contact', (req, res) => {
+  res.send('Hello contant');
+});
 
-// app.get('/blog/intro-to-python', (req, res) => {
-//     //logic to fetch intro to python frmom the db
-//   res.send('Hello blogi');
-// });
+app.get('/blog/intro-to-python', (req, res) => {
+    //logic to fetch intro to python frmom the db
+  res.send('Hello intro-to-python');
+});
 
 app.get('/blog/:slug', (req, res) => {
     //logic to fetch {slug} from the db
