@@ -1,6 +1,9 @@
 'use client'
 import React from 'react'
 import { useRef, useState, useEffect } from 'react'
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 const Managermy = () => {
 
     const ref = useRef();
@@ -13,7 +16,7 @@ const Managermy = () => {
             password: ""
         }
     );
-
+    const passwordRef = useRef()
 
 
 
@@ -23,8 +26,12 @@ const Managermy = () => {
 
         if (ref.current.src.includes("eyecross.svg")) {
             ref.current.src = "eye.svg";
+            passwordRef.current.type = "text"
         } else {
             ref.current.src = "eyecross.svg"
+            passwordRef.current.type = "password"
+
+
         }
 
     }
@@ -65,6 +72,19 @@ const Managermy = () => {
         setform({ ...form, [e.target.name]: e.target.value })
     };
 
+
+    const copyText = (text) => {
+        navigator.clipboard.writeText(text)
+        toast.success(text + " Copied to clipboard");
+    };
+
+    const edittext = (text) => {
+        alert("edited")
+    };
+    const deletetext = (text) => {
+        alert("deleted")
+    };
+
     return (
         <>
 
@@ -84,7 +104,7 @@ const Managermy = () => {
                         type="text"
                         name='site'
                         placeholder="Enter website URL"
-                        className="max-w-4xl mx-auto w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all duration-200 text-black mb-6 mt-6"
+                        className="max-w-4xl mx-auto w-full px-4 py-1 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all duration-200 text-black mb-6 mt-6"
                     />
                     <div className="flex gap-6">
                         <input
@@ -93,16 +113,17 @@ const Managermy = () => {
                             type="text"
                             name='username'
                             placeholder="Enter Username"
-                            className=" px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent  text-black transition-all duration-200 w-1/2"
+                            className=" px-4 py-1 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent  text-black transition-all duration-200 w-1/2"
                         />
                         <div className="relative w-1/2">
                             <input
+                                ref={passwordRef}
                                 name='password'
                                 onChange={handlechange}
                                 value={form.password}
-                                type={showpasswordid ? "text" : "password"}
+                                type="password"
                                 placeholder="Enter Password"
-                                className="w-full px-4 py-2 pr-12 rounded-lg border border-gray-300 text-black focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all duration-200"
+                                className="w-full px-4 py-1 pr-12 rounded-lg border border-gray-300 text-black focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all duration-200"
                             />
 
                             <button
@@ -137,12 +158,12 @@ const Managermy = () => {
                     </div>
                 </div>
                 <div className="passwords text-black font-bold   w-[75%] max-h-full mt-5 mb-5">
-                    <h2 className="mb-5 font-bold text-3xl animate-fade-in-up">
+                    <h2 className="mb-3 font-bold text-3xl animate-fade-in-up">
                         Your Passwords
                     </h2>
 
-                    <div className="overflow-y-auto h-[250px]  rounded-lg shadow ">
-                        {passwords.length === 0 && <div>Nothing to show Add Passwords </div>}
+                    <div className="overflow-y-auto h-[245px]  rounded-lg shadow ">
+                        {passwords.length === 0 && <div className='animate-fade-in-up'>Nothing to show Add Passwords </div>}
                         {passwords.length != 0 &&
 
                             <table className="w-full sticky top-0 z-10">
@@ -160,13 +181,72 @@ const Managermy = () => {
 
                                         return (
                                             <tr key={index} className="border-b hover:bg-gray-100">
-                                                <td className="px-6 py-4"><a href={item.site} target='_blank'>{item.site}</a></td>
-                                                <td className="px-6 py-4">{item.username}</td>
-                                                <td className="px-6 py-4">{item.password}</td>
+                                                <td className="px-6 py-4">
+                                                    <a href={item.site} target="_blank" rel="noopener noreferrer">
+                                                        {item.site}
+                                                    </a>
+                                                </td>
+
+                                                <td className="px-6 py-4">
+                                                    <div className="flex items-center justify-center gap-2">
+                                                        <span>{item.username}</span>
+                                                        <img
+                                                            onClick={() => copyText(item.username)}
+                                                            className="w-4 h-4 cursor-pointer"
+                                                            src="/copy.svg"
+                                                            alt="Copy Username"
+                                                        />
+                                                    </div>
+                                                </td>
+
+                                                <td className="px-6 py-4">
+                                                    <div className="flex items-center justify-center gap-2">
+                                                        <span>{item.password}</span>
+                                                        <img
+                                                            onClick={() => copyText(item.password)}
+                                                            className="w-4 h-4 cursor-pointer"
+                                                            src="/copy.svg"
+                                                            alt="Copy Password"
+                                                        />
+                                                    </div>
+                                                </td>
+
                                                 <td className="px-6 py-4 text-center">
-                                                    <button className="bg-blue-500 text-white px-3 py-1 rounded">
-                                                        Edit
-                                                    </button>
+                                                    <div className='flex gap-1'>
+
+                                                        <button onClick={() => { edittext() }} className="bg-green-500 text-white px-3 py-1 cursor-pointer rounded">
+                                                            <span>
+                                                                {/* <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                                    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                                                                    <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                                                                </svg> */}
+                                                                <lord-icon
+                                                                    src="https://cdn.lordicon.com/exymduqj.json"
+                                                                    trigger="hover"
+                                                                    stroke="bold"
+                                                                    colors="primary:#000000,secondary:#08a88a"
+                                                                    style={{ "width": "21px", "height": "21px" }}>
+                                                                </lord-icon>
+                                                            </span>
+                                                        </button>
+                                                        <button onClick={() => { deletetext(idx) }} className="bg-red-500 text-white px-3 py-1 cursor-pointer rounded">
+                                                            <span>
+                                                                {/* <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                                    <polyline points="3 6 5 6 21 6"></polyline>
+                                                                    <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"></path>
+                                                                    <path d="M10 11v6"></path>
+                                                                    <path d="M14 11v6"></path>
+                                                                    <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                                                </svg> */}
+                                                                <lord-icon
+                                                                    src="https://cdn.lordicon.com/jzinekkv.json"
+                                                                    trigger="hover"
+                                                                    stroke="bold"
+                                                                    style={{ "width": "19px", "height": "19px" }}>
+                                                                </lord-icon>
+                                                            </span>
+                                                        </button>
+                                                    </div>
                                                 </td>
                                             </tr>
                                         )
@@ -177,7 +257,7 @@ const Managermy = () => {
                 </div>
 
             </div>
-
+            <ToastContainer />
 
         </>
     )

@@ -8,6 +8,7 @@ export default function Home() {
    <div >
     <Navbar></Navbar>
     <div className="min-h-[70vh]">
+    {/* <div className="min-h-screen"> */}
 
 
     <Managermy/>

@@ -31,8 +31,10 @@ export default function RootLayout({ children }) {
         
          <Script
           src="https://cdn.lordicon.com/lordicon.js"
+          
           strategy="afterInteractive"
         />
+
          
          
          </body>

@@ -2,7 +2,7 @@ import React from 'react'
 import Link from 'next/link'
 const Navbar = () => {
   return (
-    <nav className='h-18 bg-slate-700 flex text-white justify-around items-center p-5 mb-14 '>
+    <nav className='h-14 bg-slate-700 flex text-white justify-around items-center p-5 mb-7 '>
       <Link href="/" ><div className="logo font-bold text-4xl text-white cursor-pointer">
         <span className="text-emerald-500">&lt;</span>
         Pass<span className="text-emerald-500">OP</span><span className="text-emerald-500">/&gt;</span>
@@ -13,7 +13,7 @@ const Navbar = () => {
         <Link href="/"><li className='hover:font-bold'>Contact us</li></Link> */}
         {/* <Link href="https://github.com/BhavneeshBanga" target="_blank"><li className='hover:font-bold'>Github</li></Link> */}
       </ul>
-      <Link href="https://github.com/BhavneeshBanga" target="_blank"><button className='flex  cursor-pointer items-center gap-3 '>
+      <Link href="https://github.com/BhavneeshBanga" target="_blank"><button className='bg-green-700 p-1 rounded-full flex  cursor-pointer items-center gap-3 ring-white ring-1'>
 
         <img
           className="w-8 h-8  invert"
