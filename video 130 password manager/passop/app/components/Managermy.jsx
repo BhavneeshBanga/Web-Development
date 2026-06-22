@@ -3,6 +3,7 @@ import React from 'react'
 import { useRef, useState, useEffect } from 'react'
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { v4 as uuidv4 } from 'uuid';
 
 const Managermy = () => {
 
@@ -45,17 +46,11 @@ const Managermy = () => {
 
 
     const savepassword = () => {
-        // alert(form.password)
-        // alert(form.username)
-        // alert(form.site)
-        console.log(form);
+        // console.log(form);
+        toast.success("Password saved!!");
 
-        const updatePasswords = [...passwords, form]
+        const updatePasswords = [...passwords, {...form, id : uuidv4()}]
         setPasswords(updatePasswords)
-        console.log([...passwords, form]);
-
-
-
 
         localStorage.setItem(
             "passwords",
@@ -64,7 +59,7 @@ const Managermy = () => {
 
         setform({ site: "", username: "", password: "" })
 
-        alert("Your password has been saved")
+        // alert("Your password has been saved")
 
     };
 
@@ -78,11 +73,35 @@ const Managermy = () => {
         toast.success(text + " Copied to clipboard");
     };
 
-    const edittext = (text) => {
-        alert("edited")
+    const edittext = (id) => {
+        // alert("edited")
+        const passwordToEdit = passwords.find(item => item.id ===id)
+        setform({
+            site : passwordToEdit.site,
+           username :  passwordToEdit.username,
+            password : passwordToEdit.password
+        })
+        const updatedPasswords = passwords.filter(item => item.id != id)
+        setPasswords(updatedPasswords)
+        localStorage.setItem(
+            "passwords",
+            JSON.stringify(updatedPasswords)
+        )
     };
-    const deletetext = (text) => {
-        alert("deleted")
+    const deletetext = (id) => {
+        // alert("deleted")
+        toast.success("Password Deleted successfully!!");
+        let c = confirm("Do you really want to delete this??")
+        if(c){
+
+            const updatedPasswords = passwords.filter(item => item.id != id)
+            setPasswords(updatedPasswords)
+            localStorage.setItem(
+                "passwords",
+                JSON.stringify(updatedPasswords)
+            )
+        }
+        
     };
 
     return (
@@ -97,7 +116,7 @@ const Managermy = () => {
                 <p className='text-black'>
                     Your own password manager
                 </p>
-                <div className="text-white flex flex-col max-w-4xl w-full ">
+                <div className="text-white w-full flex flex-col md:max-w-4xl md:w-full ">
                     <input
                         onChange={handlechange}
                         value={form.site}
@@ -106,7 +125,7 @@ const Managermy = () => {
                         placeholder="Enter website URL"
                         className="max-w-4xl mx-auto w-full px-4 py-1 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all duration-200 text-black mb-6 mt-6"
                     />
-                    <div className="flex gap-6">
+                    <div className="flex flex-col md:flex-row gap-6">
                         <input
                             onChange={handlechange}
                             value={form.username}
@@ -169,10 +188,10 @@ const Managermy = () => {
                             <table className="w-full sticky top-0 z-10">
                                 <thead className="bg-green-700 sticky top-0 z-10 text-white">
                                     <tr>
-                                        <th className="text-center px-6 py-3 ">Site</th>
-                                        <th className="text-center px-6 py-3 ">Username</th>
-                                        <th className="text-center px-6 py-3 ">Password</th>
-                                        <th className="text-center px-6 py-3 ">Actions</th>
+                                        <th className="text-center px-1 md:px-6 py-3 ">Site</th>
+                                        <th className="text-center px-1 md:px-6 py-3 ">Username</th>
+                                        <th className="text-center px-1 md:px-6 py-3 ">Password</th>
+                                        <th className="text-center px-1 md:px-6 py-3 ">Actions</th>
                                     </tr>
                                 </thead>
 
@@ -180,14 +199,15 @@ const Managermy = () => {
                                     {passwords.map((item, index) => {
 
                                         return (
-                                            <tr key={index} className="border-b hover:bg-gray-100">
-                                                <td className="px-6 py-4">
+                                            <tr key={index} className="border-b hover:bg-gray-100 ">
+                                                <td className= "px-2 md:px-6 py-4">
                                                     <a href={item.site} target="_blank" rel="noopener noreferrer">
                                                         {item.site}
                                                     </a>
                                                 </td>
+                                                
 
-                                                <td className="px-6 py-4">
+                                                <td className="px-2 md:px-6 py-4">
                                                     <div className="flex items-center justify-center gap-2">
                                                         <span>{item.username}</span>
                                                         <img
@@ -199,9 +219,9 @@ const Managermy = () => {
                                                     </div>
                                                 </td>
 
-                                                <td className="px-6 py-4">
+                                                <td className="px-2 md:px-6 py-4">
                                                     <div className="flex items-center justify-center gap-2">
-                                                        <span>{item.password}</span>
+                                                        <span>{"*".repeat(item.password.length)}</span>
                                                         <img
                                                             onClick={() => copyText(item.password)}
                                                             className="w-4 h-4 cursor-pointer"
@@ -211,10 +231,10 @@ const Managermy = () => {
                                                     </div>
                                                 </td>
 
-                                                <td className="px-6 py-4 text-center">
-                                                    <div className='flex gap-1'>
+                                                <td className="px-2 md:px-6 py-4 text-center">
+                                                    <div className='flex gap-1 items-center justify-center'>
 
-                                                        <button onClick={() => { edittext() }} className="bg-green-500 text-white px-3 py-1 cursor-pointer rounded">
+                                                        <button onClick={() => { edittext(item.id) }} className="bg-green-500 text-white px-3 py-1 cursor-pointer rounded">
                                                             <span>
                                                                 {/* <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                                                     <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
@@ -229,7 +249,7 @@ const Managermy = () => {
                                                                 </lord-icon>
                                                             </span>
                                                         </button>
-                                                        <button onClick={() => { deletetext(idx) }} className="bg-red-500 text-white px-3 py-1 cursor-pointer rounded">
+                                                        <button onClick={() => { deletetext(item.id) }} className="bg-red-500 text-white px-3 py-1 cursor-pointer rounded">
                                                             <span>
                                                                 {/* <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                                                     <polyline points="3 6 5 6 21 6"></polyline>

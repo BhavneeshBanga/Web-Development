@@ -4,16 +4,17 @@ import Footer from "./components/Footer";
 
 export default function Home() {
   return (
-   <>
-   <div >
-    <Navbar></Navbar>
-    <div className="min-h-[70vh]">
-    {/* <div className="min-h-screen"> */}
+    <>
+      <div >
+        <Navbar></Navbar>
+        {/* <div className="min-h-[70vh] bg-red-700"> */}
+        <div className="min-h-[70vh]">
+          {/* <div className="min-h-screen"> */}
 
 
-    <Managermy/>
-    </div>
-    <Footer/>
-    </div></>
+          <Managermy />
+        </div>
+        <Footer />
+      </div></>
   );
 }
